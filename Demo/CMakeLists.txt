@@ -4,6 +4,8 @@ target_compile_definitions(
         Demo
         PUBLIC
         -DPROJECT_ROOT_DIR="${CMAKE_SOURCE_DIR}/"
+        -DJUCE_USE_CURL=0
+        -DJUCE_WEB_BROWSER=0
 )
 
 target_sources(
