@@ -104,6 +104,9 @@ TEST(DirectoryModel, AddToTree)
     dir.createFile("test3.txt");
 
     DirTestHelper dir2 = dir.createDir("asdf");
+
+    mm.runMessageThread();
+
     dir2.createFile("dir_test1.txt");
     dir2.createFile("dir_test2.txt");
 
