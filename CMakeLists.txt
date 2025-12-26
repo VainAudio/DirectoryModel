@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.24)
 
 # TODO figure this out
 # https://stackoverflow.com/questions/47087237/cmake-and-ninja-rebuild-unnecessary-files
-if (CMAKE_GENERATOR MATCHES "Ninja")
+option(LINUX_REBUILD_WORKAROUND "ignore system headers for detecting dirty files" OFF)
+if(LINUX_REBUILD_WORKAROUND)
     file(
             WRITE "${CMAKE_BINARY_DIR}/GNUMakeRulesOverwrite.cmake"
             "STRING(REPLACE \"-MD\" \"-MMD\" CMAKE_DEPFILE_FLAGS_C \"\${CMAKE_DEPFILE_FLAGS_C}\")\n"
