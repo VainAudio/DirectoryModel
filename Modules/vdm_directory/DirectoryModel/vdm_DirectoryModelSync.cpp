@@ -9,7 +9,7 @@ vdm::DirectoryModelSync::DirectoryModelSync() = default;
 
 vdm::DirectoryModelSync::~DirectoryModelSync()
 {
-    for (const auto &id : m_models | std::views::keys)
+    for (const auto &[id, _] : m_models)
         m_fileWatcher.removeWatch(id);
 }
 
