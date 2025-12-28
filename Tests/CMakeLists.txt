@@ -16,13 +16,13 @@ set(TestSourceFiles
 )
 
 add_executable("Tests" "${TestSourceFiles}")
-target_compile_features("Tests" PRIVATE cxx_std_20)
 
 target_compile_definitions(
         "Tests"
         PRIVATE
         -DTEST_TEMP_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tmp/"
         JUCE_USE_CURL=0
+        -DJUCE_WEB_BROWSER=0
 )
 
 target_link_libraries("Tests"
