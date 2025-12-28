@@ -6,6 +6,7 @@ on:
     branches:
       - 'main'
       - 'develop'
+      - 'linux'
 env:
   BUILD_TYPE: Release
   BUILD_DIR: Builds
