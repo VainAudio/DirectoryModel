@@ -8,7 +8,7 @@
     description:        UI components for displaying vdm Directory Models as a directory tree
     website:            VainAudio.com
     license:            MIT
-    minimumCppStandard: 20
+    minimumCppStandard: 17
     dependencies: vdm_directory juce_gui_basics juce_data_structures
 
     END_JUCE_MODULE_DECLARATION
