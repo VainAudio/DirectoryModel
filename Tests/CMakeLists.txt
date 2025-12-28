@@ -35,6 +35,7 @@ target_link_libraries("Tests"
 
         juce::juce_core
         juce::juce_gui_basics
+        juce::juce_data_structures
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags
