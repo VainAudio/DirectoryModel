@@ -14,6 +14,8 @@ endif()
 
 project(VainDirectoryModel VERSION 0.0.1)
 
+set(CMAKE_CXX_STANDARD 20)
+
 include(FetchContent)
 FetchContent_Declare(
         juce
