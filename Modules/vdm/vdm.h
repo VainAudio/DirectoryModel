@@ -8,7 +8,7 @@
     description:        Classes for building juce::ValueTree based models of directories on the disk
     website:            VainAudio.com
     license:            MIT
-    minimumCppStandard: 17
+    minimumCppStandard: 20
     dependencies:
 
     END_JUCE_MODULE_DECLARATION

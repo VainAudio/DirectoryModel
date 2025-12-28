@@ -24,6 +24,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(juce)
 
+set(CMAKE_CXX_STANDARD 20)
+
 add_subdirectory(Modules)
 add_subdirectory(Tests)
 add_subdirectory(Demo)

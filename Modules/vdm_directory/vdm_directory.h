@@ -8,7 +8,7 @@
     description:        Tools for representing directories from the disk as a juce::ValueTree
     website:            VainAudio.com
     license:            MIT
-    minimumCppStandard: 17
+    minimumCppStandard: 20
     dependencies:       vdm juce_core juce_data_structures
 
     END_JUCE_MODULE_DECLARATION
