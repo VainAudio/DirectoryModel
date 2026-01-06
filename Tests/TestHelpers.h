@@ -34,7 +34,8 @@ public:
     juce::File file();
 
 private:
-    DirTestHelper(const DirTestHelper &) = default;
+    DirTestHelper(const DirTestHelper &) = delete;
+    DirTestHelper(DirTestHelper &&) = default;
     explicit DirTestHelper(juce::File child);
 
     juce::File m_root{ TEST_TEMP_DIR };
