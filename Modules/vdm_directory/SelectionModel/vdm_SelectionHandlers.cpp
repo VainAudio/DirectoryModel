@@ -3,7 +3,6 @@
 #include <ranges>
 
 //-----------------------------------------------------------------------------
-static_assert(__cplusplus == 202002L);
 
 vdm::SingleSelectionHandler::~SingleSelectionHandler() = default;
 
