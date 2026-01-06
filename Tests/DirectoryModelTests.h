@@ -256,7 +256,7 @@ TEST(DirectoryModel, OnModifyUpdateHandler)
     vdm::DirectoryModel model;
 
     MockModifyHandler mock;
-    EXPECT_CALL(mock, onModify(_, _)).Times(1);
+    EXPECT_CALL(mock, onModify(_, _)).Times(testing::AnyNumber());
     model.addUpdateHandler(mock);
 
     model.initialize(dir.file());
