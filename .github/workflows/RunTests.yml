@@ -26,12 +26,12 @@ jobs:
           - name: Linux
             os: ubuntu-22.04
             generator: Ninja
-          - name: macOS
-            os: macos-14
-            generator: Ninja
-          - name: Windows
-            os: windows-latest
-            generator: Ninja
+#          - name: macOS
+#            os: macos-14
+#            generator: Ninja
+#          - name: Windows
+#            os: windows-latest
+#            generator: Ninja
 
     steps:
       - uses: ilammy/msvc-dev-cmd@v1
@@ -39,6 +39,9 @@ jobs:
       - name: Set up Clang
         if: runner.os == 'Linux'
         uses: egor-tensin/setup-clang@v2.1
+        with:
+          version: 18
+          platform: x64
 
       - name: Install JUCE's Linux Deps
         if: runner.os == 'Linux'
