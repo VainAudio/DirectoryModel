@@ -1,12 +1,17 @@
 #include "vdm_DirectoryModelSync.h"
 #include "vdm_DirectoryModel.h"
+#include <ranges>
 
 //-----------------------------------------------------------------------------
 
 vdm::DirectoryModelSync::DirectoryModelSync() = default;
 //-----------------------------------------------------------------------------
 
-vdm::DirectoryModelSync::~DirectoryModelSync() = default;
+vdm::DirectoryModelSync::~DirectoryModelSync()
+{
+    for (const auto &[id, _] : m_models)
+        m_fileWatcher.removeWatch(id);
+}
 
 //-----------------------------------------------------------------------------
 
