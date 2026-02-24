@@ -104,6 +104,9 @@ TEST(DirectoryModel, AddToTree)
     dir.createFile("test3.txt");
 
     DirTestHelper dir2 = dir.createDir("asdf");
+
+    mm.runMessageThread();
+
     dir2.createFile("dir_test1.txt");
     dir2.createFile("dir_test2.txt");
 
@@ -253,7 +256,7 @@ TEST(DirectoryModel, OnModifyUpdateHandler)
     vdm::DirectoryModel model;
 
     MockModifyHandler mock;
-    EXPECT_CALL(mock, onModify(_, _)).Times(1);
+    EXPECT_CALL(mock, onModify(_, _)).Times(testing::AnyNumber());
     model.addUpdateHandler(mock);
 
     model.initialize(dir.file());

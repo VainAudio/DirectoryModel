@@ -1,7 +1,6 @@
 # Vain Directory Model
 
-[![Run Tests](https://github.com/carl-sr/ValueTreeLib/actions/workflows/RunTests.yml/badge.svg?branch=develop)](https://github.com/carl-sr/ValueTreeLib/actions/workflows/RunTests.yml)
-
+[![Run Tests](https://github.com/VainAudio/DirectoryModel/actions/workflows/RunTests.yml/badge.svg)](https://github.com/VainAudio/DirectoryModel/actions/workflows/RunTests.yml)
 
 A couple JUCE modules that are useful for representing and interacting with files and directories through `juce::ValueTree`.
 It allows displaying a directory's contents in a tree view and allowing the user to make selections and open/close directories with their mouse or arrow keys.

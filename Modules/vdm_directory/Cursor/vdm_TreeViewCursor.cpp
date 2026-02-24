@@ -20,8 +20,14 @@ bool vdm::TreeViewCursor::keyUp()
     {
         while (DirectoryModel::IsDirOpen(m_cursor.getValueTree()))
         {
-            m_cursor.child();
-            while (m_cursor.next()) {}
+            if (m_cursor.child())
+            {
+                while (m_cursor.next()) {}
+            }
+            else
+            {
+                m_cursor.previous();
+            }
         }
         return true;
     }
@@ -37,7 +43,10 @@ bool vdm::TreeViewCursor::keyDown()
 {
     if (DirectoryModel::IsDirOpen(m_cursor.getValueTree()))
     {
-        m_cursor.child();
+        if (!m_cursor.child())
+        {
+            m_cursor.next();
+        }
     }
     else if (m_cursor.next()) {}
     else
