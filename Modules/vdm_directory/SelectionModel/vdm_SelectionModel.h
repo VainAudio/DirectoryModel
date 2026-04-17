@@ -54,10 +54,11 @@ public:
     juce::ValueTree getValueTree() const;
     void setValueTree(juce::ValueTree tree);
 
-    void addSelectionHandler(const juce::String& modeId, ISelectionHandler &handler);
+    void addSelectionHandler(const juce::String &modeId, ISelectionHandler &handler);
     void setSelectionMode(const juce::String &modeId);
 
-    void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
+    void valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
+                                  const juce::Identifier &property) override;
 
 private:
     juce::ValueTree m_tree;

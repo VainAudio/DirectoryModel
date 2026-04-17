@@ -5,12 +5,16 @@
 
 void vdm::TreeView::setValueTree(juce::ValueTree tree)
 {
-    m_root.initialize(tree, [this](auto t)
-    {
-        auto ptr{ createTreeViewItem(t) };
-        addAndMakeVisible(*ptr);
-        return std::move(ptr);
-    });
+    m_root.initialize(tree,
+                      [this](auto t)
+                      {
+                          auto ptr{ createTreeViewItem(t) };
+
+                          if (ptr)
+                              addAndMakeVisible(*ptr);
+
+                          return std::move(ptr);
+                      });
 
     m_root.tree.addListener(this);
 }
@@ -56,7 +60,8 @@ void vdm::TreeView::resized()
         m_root.setBounds(b, m_subFolderIndentation, m_itemMargin, m_itemHeight);
     else
     {
-        m_root.component->setBounds({});
+        if (m_root.component)
+            m_root.component->setBounds({});
 
         for (auto &node : m_root.subNodes)
             node.setBounds(b, m_subFolderIndentation, m_itemMargin, m_itemHeight);
@@ -79,13 +84,12 @@ int vdm::TreeView::getMaxIndentLevel() const
 
 //--------------------------------------------------------------------------------
 
-void vdm::TreeView::valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenAdded)
+void vdm::TreeView::valueTreeChildAdded(juce::ValueTree &parentTree, juce::ValueTree &childWhichHasBeenAdded)
 {
     if (auto node = getNode(parentTree))
     {
         const int index{ parentTree.indexOf(childWhichHasBeenAdded) };
-        Node newNode
-        {
+        Node newNode{
             .component = createTreeViewItem(childWhichHasBeenAdded),
             .tree = childWhichHasBeenAdded,
             .subNodes = {},
@@ -100,7 +104,8 @@ void vdm::TreeView::valueTreeChildAdded(juce::ValueTree& parentTree, juce::Value
 
 //--------------------------------------------------------------------------------
 
-void vdm::TreeView::valueTreeChildRemoved(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved)
+void vdm::TreeView::valueTreeChildRemoved(juce::ValueTree &parentTree, juce::ValueTree &childWhichHasBeenRemoved,
+                                          int indexFromWhichChildWasRemoved)
 {
     juce::ignoreUnused(childWhichHasBeenRemoved);
     if (auto node = getNode(parentTree))
@@ -113,7 +118,8 @@ void vdm::TreeView::valueTreeChildRemoved(juce::ValueTree& parentTree, juce::Val
 
 //--------------------------------------------------------------------------------
 
-void vdm::TreeView::valueTreeChildOrderChanged(juce::ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex)
+void vdm::TreeView::valueTreeChildOrderChanged(juce::ValueTree &parentTreeWhoseChildrenHaveMoved, int oldIndex,
+                                               int newIndex)
 {
     if (auto node = getNode(parentTreeWhoseChildrenHaveMoved))
     {
@@ -127,7 +133,8 @@ void vdm::TreeView::valueTreeChildOrderChanged(juce::ValueTree& parentTreeWhoseC
 
 //--------------------------------------------------------------------------------
 
-void vdm::TreeView::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property)
+void vdm::TreeView::valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
+                                             const juce::Identifier &property)
 {
     juce::ignoreUnused(treeWhosePropertyHasChanged);
 
@@ -170,9 +177,11 @@ int vdm::TreeView::Node::getHeight(int itemHeight, int margin) const
 
 //--------------------------------------------------------------------------------
 
-void vdm::TreeView::Node::setBounds(juce::Rectangle<int>& bounds, int indent, int margin, int height)
+void vdm::TreeView::Node::setBounds(juce::Rectangle<int> &bounds, int indent, int margin, int height)
 {
-    component->setBounds(bounds.removeFromTop(height));
+    if (component)
+        component->setBounds(bounds.removeFromTop(height));
+
     bounds.removeFromTop(margin);
 
     if (DirectoryModel::IsDirOpen(tree))
@@ -197,21 +206,25 @@ void vdm::TreeView::Node::setBounds(juce::Rectangle<int>& bounds, int indent, in
 
 //--------------------------------------------------------------------------------
 
-void vdm::TreeView::Node::initialize(juce::ValueTree t, const std::function<std::unique_ptr< juce::Component>(juce::ValueTree)>& fn)
+void vdm::TreeView::Node::initialize(juce::ValueTree t,
+                                     const std::function<std::unique_ptr<juce::Component>(juce::ValueTree)> &fn)
 {
     tree = t;
     component = fn(t);
-    for (auto child : tree)
+    if (component)
     {
-        Node subNode;
-        subNode.initialize(child, fn);
-        subNodes.push_back(std::move(subNode));
+        for (auto child : tree)
+        {
+            Node subNode;
+            subNode.initialize(child, fn);
+            subNodes.push_back(std::move(subNode));
+        }
     }
 }
 
 //--------------------------------------------------------------------------------
 
-vdm::TreeView::Node* vdm::TreeView::getNode(juce::ValueTree tree)
+vdm::TreeView::Node *vdm::TreeView::getNode(juce::ValueTree tree)
 {
     std::stack<juce::Identifier> path;
     for (auto t = tree; t.isValid(); t = t.getParent())
@@ -224,7 +237,8 @@ vdm::TreeView::Node* vdm::TreeView::getNode(juce::ValueTree tree)
 
         while (!path.empty() && node)
         {
-            const auto it = std::ranges::find_if(node->subNodes, [&path](auto &item){ return item.tree.getType() == path.top(); });
+            const auto it =
+                std::ranges::find_if(node->subNodes, [&path](auto &item) { return item.tree.getType() == path.top(); });
             if (it != node->subNodes.end())
             {
                 node = &*it;

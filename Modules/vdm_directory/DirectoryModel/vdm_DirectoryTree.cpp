@@ -6,16 +6,16 @@ vdm::DirectoryTree::DirectoryTree() = default;
 
 //-----------------------------------------------------------------------------
 
-vdm::DirectoryTree::DirectoryTree(const juce::File& root)
+vdm::DirectoryTree::DirectoryTree(const juce::File &root)
 {
     initialize(root);
 }
 
 //-----------------------------------------------------------------------------
 
-void vdm::DirectoryTree::initialize(const juce::File& root)
+void vdm::DirectoryTree::initialize(const juce::File &root)
 {
-    jassert(!isInitialized()); // don't initialize twice
+    jassert(!isInitialized());                    // don't initialize twice
     jassert(root.exists() && root.isDirectory()); // don't initialize with a nonexistent file
 
     m_root = root;
@@ -45,21 +45,21 @@ juce::File vdm::DirectoryTree::getRootFile() const
 
 //-----------------------------------------------------------------------------
 
-bool vdm::DirectoryTree::hasValueTreeAt(const juce::File& file)
+bool vdm::DirectoryTree::hasValueTreeAt(const juce::File &file)
 {
     return internalGetValueTreeAt(file, false).isValid();
 }
 
 //-----------------------------------------------------------------------------
 
-juce::ValueTree vdm::DirectoryTree::getValueTreeAt(const juce::File& file)
+juce::ValueTree vdm::DirectoryTree::getValueTreeAt(const juce::File &file)
 {
     return internalGetValueTreeAt(file, true);
 }
 
 //-----------------------------------------------------------------------------
 
-void vdm::DirectoryTree::removeValueTreeAt(const juce::File& file)
+void vdm::DirectoryTree::removeValueTreeAt(const juce::File &file)
 {
     const auto tree{ internalGetValueTreeAt(file, false) };
 
@@ -69,7 +69,7 @@ void vdm::DirectoryTree::removeValueTreeAt(const juce::File& file)
 
 //-----------------------------------------------------------------------------
 
-std::stack<juce::String> vdm::DirectoryTree::pathToStack(const juce::File& f) const
+std::stack<juce::String> vdm::DirectoryTree::pathToStack(const juce::File &f) const
 {
     std::stack<juce::String> stack;
 
@@ -91,7 +91,7 @@ std::stack<juce::String> vdm::DirectoryTree::pathToStack(const juce::File& f) co
 
 //-----------------------------------------------------------------------------
 
-juce::ValueTree vdm::DirectoryTree::internalGetValueTreeAt(const juce::File& file, bool create)
+juce::ValueTree vdm::DirectoryTree::internalGetValueTreeAt(const juce::File &file, bool create)
 {
     if (!m_tree.isValid())
     {

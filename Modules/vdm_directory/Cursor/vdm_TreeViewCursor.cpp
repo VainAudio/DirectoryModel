@@ -22,7 +22,9 @@ bool vdm::TreeViewCursor::keyUp()
         {
             if (m_cursor.child())
             {
-                while (m_cursor.next()) {}
+                while (m_cursor.next())
+                {
+                }
             }
             else
             {
@@ -48,10 +50,14 @@ bool vdm::TreeViewCursor::keyDown()
             m_cursor.next();
         }
     }
-    else if (m_cursor.next()) {}
+    else if (m_cursor.next())
+    {
+    }
     else
     {
-        while (m_cursor.parent() && !m_cursor.next()) {}
+        while (m_cursor.parent() && !m_cursor.next())
+        {
+        }
     }
 
     return true;

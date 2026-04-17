@@ -3,18 +3,29 @@
 
 //--------------------------------------------------------------------------------
 
-class DemoApplication  : public juce::JUCEApplication
+class DemoApplication : public juce::JUCEApplication
 {
 public:
-    DemoApplication() {}
-
-    const juce::String getApplicationName() override       { return "Demo"; }
-    const juce::String getApplicationVersion() override    { return "1.0"; }
-    bool moreThanOneInstanceAllowed() override             { return true; }
-
-    void initialise (const juce::String& ) override
+    DemoApplication()
     {
-        mainWindow.reset (new MainWindow (getApplicationName()));
+    }
+
+    const juce::String getApplicationName() override
+    {
+        return "Demo";
+    }
+    const juce::String getApplicationVersion() override
+    {
+        return "1.0";
+    }
+    bool moreThanOneInstanceAllowed() override
+    {
+        return true;
+    }
+
+    void initialise(const juce::String &) override
+    {
+        mainWindow.reset(new MainWindow(getApplicationName()));
     }
 
     void shutdown() override
@@ -27,22 +38,24 @@ public:
         quit();
     }
 
-    void anotherInstanceStarted (const juce::String&) override {}
+    void anotherInstanceStarted(const juce::String &) override
+    {
+    }
 
     class MainWindow : public juce::DocumentWindow
     {
     public:
-        MainWindow (juce::String name)
-            : DocumentWindow (name,
-                              juce::Desktop::getInstance().getDefaultLookAndFeel()
-                                                          .findColour (juce::ResizableWindow::backgroundColourId),
-                              DocumentWindow::allButtons)
+        MainWindow(juce::String name)
+            : DocumentWindow(name,
+                             juce::Desktop::getInstance().getDefaultLookAndFeel().findColour(
+                                 juce::ResizableWindow::backgroundColourId),
+                             DocumentWindow::allButtons)
         {
-            setUsingNativeTitleBar (true);
-            setContentOwned (new MainComponent(), true);
-            setResizable (true, false);
-            centreWithSize (getWidth(), getHeight());
-            setVisible (true);
+            setUsingNativeTitleBar(true);
+            setContentOwned(new MainComponent(), true);
+            setResizable(true, false);
+            centreWithSize(getWidth(), getHeight());
+            juce::Component::setVisible(true);
         }
 
         void closeButtonPressed() override
@@ -51,7 +64,7 @@ public:
         }
 
     private:
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow)
     };
 
 private:

@@ -17,7 +17,7 @@ public:
     ~DirectoryModelDemoComponent() override;
 
     void resized() override;
-    void modifierKeysChanged(const juce::ModifierKeys& modifiers) override;
+    void modifierKeysChanged(const juce::ModifierKeys &modifiers) override;
 
 private:
     vdm::NameUpdateHandler m_nameUpdateHandler;

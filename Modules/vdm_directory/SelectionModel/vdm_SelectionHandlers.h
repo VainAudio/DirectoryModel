@@ -21,7 +21,7 @@ public:
 
     ~SingleSelectionHandler() override;
 
-    void selectTree(const std::span<juce::ValueTree>& previouslySelected, juce::ValueTree newSelection) override;
+    void selectTree(const std::span<juce::ValueTree> &previouslySelected, juce::ValueTree newSelection) override;
 };
 
 //-----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ public:
 
     ~PathSelectionHandler() override;
 
-    void selectTree(const std::span<juce::ValueTree>& previouslySelected, juce::ValueTree newSelection) override;
+    void selectTree(const std::span<juce::ValueTree> &previouslySelected, juce::ValueTree newSelection) override;
 };
 
 //-----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ public:
 
     ~GroupMultiSelectionHandler() override;
 
-    void selectTree(const std::span<juce::ValueTree>& previouslySelected, juce::ValueTree newSelection) override;
+    void selectTree(const std::span<juce::ValueTree> &previouslySelected, juce::ValueTree newSelection) override;
 };
 
 //-----------------------------------------------------------------------------
@@ -66,9 +66,8 @@ public:
 
     ~IndividualMultiSelectionHandler() override;
 
-    void selectTree(const std::span<juce::ValueTree>& previouslySelected, juce::ValueTree newSelection) override;
+    void selectTree(const std::span<juce::ValueTree> &previouslySelected, juce::ValueTree newSelection) override;
 };
-
 
 END_VDM_NAMESPACE
 

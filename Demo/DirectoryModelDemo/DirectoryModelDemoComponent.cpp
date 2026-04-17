@@ -43,7 +43,8 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
     m_pathSelectionToggle.setButtonText("path selection");
     m_pathSelectionToggle.onStateChange = [this]()
     {
-        m_selectionModel.setSelectionMode(m_pathSelectionToggle.getToggleState() ? vdm::PathSelectionHandler::Mode : vdm::SingleSelectionHandler::Mode );
+        m_selectionModel.setSelectionMode(m_pathSelectionToggle.getToggleState() ? vdm::PathSelectionHandler::Mode
+                                                                                 : vdm::SingleSelectionHandler::Mode);
     };
 
     getLookAndFeel().setColour(juce::ToggleButton::ColourIds::textColourId, juce::Colours::black);
@@ -59,21 +60,22 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
         switch (m_treeViewTypeCbx.getSelectedId())
         {
         case 1:
-            {
-                auto ptr = std::make_unique<DirectoryModelDemoJuceTreeView>();
-                ptr->setValueTree(m_dirModel.getValueTree());
-                m_treeView = std::move(ptr);
-                break;
-            }
+        {
+            auto ptr = std::make_unique<DirectoryModelDemoJuceTreeView>();
+            ptr->setValueTree(m_dirModel.getValueTree());
+            m_treeView = std::move(ptr);
+            break;
+        }
         case 2:
-            {
-                auto ptr = std::make_unique<DirectoryModelDemoTreeView>();
-                ptr->setValueTree(m_dirModel.getValueTree());
-                ptr->setSelectionValueTree(m_dirModel.getValueTree());
-                m_treeView = std::move(ptr);
-                break;
-            }
-        default: jassertfalse;
+        {
+            auto ptr = std::make_unique<DirectoryModelDemoTreeView>();
+            ptr->setValueTree(m_dirModel.getValueTree());
+            ptr->setSelectionValueTree(m_dirModel.getValueTree());
+            m_treeView = std::move(ptr);
+            break;
+        }
+        default:
+            jassertfalse;
         }
 
         addAndMakeVisible(*m_treeView);
@@ -109,7 +111,7 @@ void DirectoryModelDemoComponent::resized()
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoComponent::modifierKeysChanged(const juce::ModifierKeys& modifiers)
+void DirectoryModelDemoComponent::modifierKeysChanged(const juce::ModifierKeys &modifiers)
 {
     if (m_pathSelectionToggle.getToggleState())
         return;

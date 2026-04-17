@@ -14,7 +14,7 @@ class SelectionViewer
 public:
     ~SelectionViewer() override;
 
-    void paint(juce::Graphics& g) override;
+    void paint(juce::Graphics &g) override;
 
 private:
     void onSelectedTreeChanged(juce::ValueTree tree) override;

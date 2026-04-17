@@ -23,7 +23,7 @@ void vdm::SelectionModel::RequestToggleSelection(juce::ValueTree tree)
 
 //-----------------------------------------------------------------------------
 
-void vdm::SelectionModel::SetSelectionMode(juce::ValueTree tree, const juce::String& selectionMode)
+void vdm::SelectionModel::SetSelectionMode(juce::ValueTree tree, const juce::String &selectionMode)
 {
     tree.setProperty(ModeKey, selectionMode, nullptr);
 }
@@ -62,21 +62,22 @@ void vdm::SelectionModel::setValueTree(juce::ValueTree tree)
 
 //-----------------------------------------------------------------------------
 
-void vdm::SelectionModel::addSelectionHandler(const juce::String& modeId, ISelectionHandler& handler)
+void vdm::SelectionModel::addSelectionHandler(const juce::String &modeId, ISelectionHandler &handler)
 {
     m_selectionHandlers[modeId] = &handler;
 }
 
 //-----------------------------------------------------------------------------
 
-void vdm::SelectionModel::setSelectionMode(const juce::String& modeId)
+void vdm::SelectionModel::setSelectionMode(const juce::String &modeId)
 {
     SetSelectionMode(m_tree, modeId);
 }
 
 //-----------------------------------------------------------------------------
 
-void vdm::SelectionModel::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property)
+void vdm::SelectionModel::valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
+                                                   const juce::Identifier &property)
 {
     if (property == RequestSelectionKey && treeWhosePropertyHasChanged.hasProperty(RequestSelectionKey))
     {
@@ -95,11 +96,8 @@ void vdm::SelectionModel::valueTreePropertyChanged(juce::ValueTree& treeWhosePro
             m_currentlySelected.push_back(treeWhosePropertyHasChanged);
         else
         {
-            const auto it{ std::ranges::find_if(m_currentlySelected,
-                [treeWhosePropertyHasChanged](auto t)
-                {
-                    return t == treeWhosePropertyHasChanged;
-                }) };
+            const auto it{ std::ranges::find_if(m_currentlySelected, [treeWhosePropertyHasChanged](auto t)
+                                                { return t == treeWhosePropertyHasChanged; }) };
 
             if (it != m_currentlySelected.end())
                 m_currentlySelected.erase(it);
@@ -107,7 +105,8 @@ void vdm::SelectionModel::valueTreePropertyChanged(juce::ValueTree& treeWhosePro
     }
     if (property == ModeKey)
     {
-        if (const auto it = m_selectionHandlers.find(treeWhosePropertyHasChanged.getProperty(property)); it != m_selectionHandlers.end())
+        if (const auto it = m_selectionHandlers.find(treeWhosePropertyHasChanged.getProperty(property));
+            it != m_selectionHandlers.end())
             m_activeSelectionHandler = it->second;
         else
             jassertfalse;

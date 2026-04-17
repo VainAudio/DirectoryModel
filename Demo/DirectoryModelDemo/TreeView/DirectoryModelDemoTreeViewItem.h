@@ -19,12 +19,12 @@ public:
     explicit DirectoryModelDemoTreeViewItem(juce::ValueTree tree);
     ~DirectoryModelDemoTreeViewItem() override;
 
-    void paint(juce::Graphics& g) override;
+    void paint(juce::Graphics &g) override;
 
-    void mouseUp(const juce::MouseEvent& event) override;
-    void mouseEnter(const juce::MouseEvent& event) override;
-    void mouseExit(const juce::MouseEvent& event) override;
-    void mouseDoubleClick(const juce::MouseEvent& event) override;
+    void mouseUp(const juce::MouseEvent &event) override;
+    void mouseEnter(const juce::MouseEvent &event) override;
+    void mouseExit(const juce::MouseEvent &event) override;
+    void mouseDoubleClick(const juce::MouseEvent &event) override;
 
 private:
     // vdm::TreeViewItem
@@ -32,7 +32,8 @@ private:
     void onItemIsDirOpenChanged(bool isDirOpen) override;
 
     // juce::ValueTree::Listener
-    void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
+    void valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
+                                  const juce::Identifier &property) override;
 
     juce::ValueTree m_tree;
     bool m_isSelected{ false };

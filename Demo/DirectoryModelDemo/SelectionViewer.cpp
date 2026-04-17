@@ -22,7 +22,7 @@ void SelectionViewer::onSelectedTreeChanged(juce::ValueTree tree)
 
 //--------------------------------------------------------------------------------
 
-void SelectionViewer::paint(juce::Graphics& g)
+void SelectionViewer::paint(juce::Graphics &g)
 {
     auto b{ getLocalBounds() };
 
