@@ -187,7 +187,7 @@ using ::testing::_;
 class MockSelectionModelListener : public vdm::SelectionModelListener
 {
 public:
-    MOCK_METHOD(void, onSelectedTreeChanged, (juce::ValueTree), (override));
+    MOCK_METHOD(void, onTreeSelectionChanged, (juce::ValueTree), (override));
 };
 
 //--------------------------------------------------------------------------------
@@ -215,7 +215,7 @@ TEST(SelectionModel, SelectionListenerInit)
 
     MockSelectionModelListener listener;
 
-    EXPECT_CALL(listener, onSelectedTreeChanged(_)).Times(2);
+    EXPECT_CALL(listener, onTreeSelectionChanged(_)).Times(2);
     listener.setSelectionModelValueTree(root);
 }
 
@@ -241,7 +241,7 @@ TEST(SelectionModel, SelectionListener)
 
     MockSelectionModelListener listener;
 
-    EXPECT_CALL(listener, onSelectedTreeChanged(_)).Times(1);
+    EXPECT_CALL(listener, onTreeSelectionChanged(_)).Times(1);
     listener.setSelectionModelValueTree(root);
 
     vdm::SelectionModel::RequestSelectTree(childA);

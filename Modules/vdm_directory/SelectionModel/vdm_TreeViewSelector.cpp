@@ -10,7 +10,7 @@ public:
     {
     }
 
-    void onSelectedTreeChanged(juce::ValueTree tree) override
+    void onTreeSelectionChanged(juce::ValueTree tree) override
     {
         if (SelectionModel::IsSelected(tree))
         {
