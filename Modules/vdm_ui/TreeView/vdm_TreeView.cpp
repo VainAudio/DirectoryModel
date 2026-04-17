@@ -8,7 +8,10 @@ void vdm::TreeView::setValueTree(juce::ValueTree tree)
     m_root.initialize(tree, [this](auto t)
     {
         auto ptr{ createTreeViewItem(t) };
-        addAndMakeVisible(*ptr);
+
+        if (ptr)
+            addAndMakeVisible(*ptr);
+
         return std::move(ptr);
     });
 
@@ -56,7 +59,8 @@ void vdm::TreeView::resized()
         m_root.setBounds(b, m_subFolderIndentation, m_itemMargin, m_itemHeight);
     else
     {
-        m_root.component->setBounds({});
+        if (m_root.component)
+            m_root.component->setBounds({});
 
         for (auto &node : m_root.subNodes)
             node.setBounds(b, m_subFolderIndentation, m_itemMargin, m_itemHeight);
@@ -172,7 +176,9 @@ int vdm::TreeView::Node::getHeight(int itemHeight, int margin) const
 
 void vdm::TreeView::Node::setBounds(juce::Rectangle<int>& bounds, int indent, int margin, int height)
 {
-    component->setBounds(bounds.removeFromTop(height));
+    if (component)
+        component->setBounds(bounds.removeFromTop(height));
+
     bounds.removeFromTop(margin);
 
     if (DirectoryModel::IsDirOpen(tree))
@@ -201,11 +207,13 @@ void vdm::TreeView::Node::initialize(juce::ValueTree t, const std::function<std:
 {
     tree = t;
     component = fn(t);
-    for (auto child : tree)
-    {
-        Node subNode;
-        subNode.initialize(child, fn);
-        subNodes.push_back(std::move(subNode));
+    if (component) {
+        for (auto child : tree)
+        {
+            Node subNode;
+            subNode.initialize(child, fn);
+            subNodes.push_back(std::move(subNode));
+        }
     }
 }
 
