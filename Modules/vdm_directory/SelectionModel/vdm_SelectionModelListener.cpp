@@ -21,7 +21,7 @@ public:
     {
         if (property == SelectionModel::IsSelectedKey)
         {
-            listener.onSelectedTreeChanged(treeWhosePropertyHasChanged);
+            listener.onTreeSelectionChanged(treeWhosePropertyHasChanged);
         }
     }
 
@@ -43,7 +43,7 @@ public:
                           if (SelectionModel::IsSelected(t))
                           {
                               t.setProperty(SelectionModel::IsSelectedKey, false, nullptr);
-                              listener.onSelectedTreeChanged(t);
+                              listener.onTreeSelectionChanged(t);
                           }
                       });
     }

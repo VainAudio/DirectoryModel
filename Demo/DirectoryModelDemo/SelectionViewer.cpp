@@ -6,7 +6,7 @@ SelectionViewer::~SelectionViewer() = default;
 
 //--------------------------------------------------------------------------------
 
-void SelectionViewer::onSelectedTreeChanged(juce::ValueTree tree)
+void SelectionViewer::onTreeSelectionChanged(juce::ValueTree tree)
 {
     if (vdm::SelectionModel::IsSelected(tree))
         m_selectedTrees.insert(m_selectedTrees.begin(), tree);
