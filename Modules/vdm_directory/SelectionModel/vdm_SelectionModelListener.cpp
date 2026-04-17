@@ -7,7 +7,8 @@ class vdm::SelectionModelListener::Impl : public juce::ValueTree::Listener
 public:
     Impl(SelectionModelListener &l)
         : listener(l)
-    {}
+    {
+    }
 
     ~Impl() override
     {
@@ -15,7 +16,8 @@ public:
             tree.removeListener(this);
     }
 
-    void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override
+    void valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
+                                  const juce::Identifier &property) override
     {
         if (property == SelectionModel::IsSelectedKey)
         {
@@ -23,26 +25,27 @@ public:
         }
     }
 
-    template<typename Fn>
-    static void traverseApply(juce::ValueTree tree, const Fn &fn)
+    template <typename Fn> static void traverseApply(juce::ValueTree tree, const Fn &fn)
     {
         fn(tree);
         for (auto child : tree)
             traverseApply(child, fn);
     }
 
-    void valueTreeChildRemoved(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved) override
+    void valueTreeChildRemoved(juce::ValueTree &parentTree, juce::ValueTree &childWhichHasBeenRemoved,
+                               int indexFromWhichChildWasRemoved) override
     {
         juce::ignoreUnused(parentTree, indexFromWhichChildWasRemoved);
 
-        traverseApply(childWhichHasBeenRemoved, [this](juce::ValueTree t)
-        {
-            if (SelectionModel::IsSelected(t))
-            {
-                t.setProperty(SelectionModel::IsSelectedKey, false, nullptr);
-                listener.onSelectedTreeChanged(t);
-            }
-        });
+        traverseApply(childWhichHasBeenRemoved,
+                      [this](juce::ValueTree t)
+                      {
+                          if (SelectionModel::IsSelected(t))
+                          {
+                              t.setProperty(SelectionModel::IsSelectedKey, false, nullptr);
+                              listener.onSelectedTreeChanged(t);
+                          }
+                      });
     }
 
     void sendCallbacks()
@@ -64,7 +67,8 @@ public:
 
 vdm::SelectionModelListener::SelectionModelListener()
     : m_p(std::make_unique<Impl>(*this))
-{}
+{
+}
 
 //-----------------------------------------------------------------------------
 
@@ -72,7 +76,7 @@ vdm::SelectionModelListener::~SelectionModelListener() = default;
 
 //-----------------------------------------------------------------------------
 
-void vdm::SelectionModelListener::setSelectionModel(SelectionModel& model)
+void vdm::SelectionModelListener::setSelectionModel(SelectionModel &model)
 {
     setSelectionModelValueTree(model.getValueTree());
 }

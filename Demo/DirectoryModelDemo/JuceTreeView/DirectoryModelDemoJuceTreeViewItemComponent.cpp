@@ -24,7 +24,7 @@ DirectoryModelDemoJuceTreeViewItemComponent::~DirectoryModelDemoJuceTreeViewItem
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoJuceTreeViewItemComponent::paint(juce::Graphics& g)
+void DirectoryModelDemoJuceTreeViewItemComponent::paint(juce::Graphics &g)
 {
     const auto b{ getLocalBounds() };
 
@@ -38,7 +38,7 @@ void DirectoryModelDemoJuceTreeViewItemComponent::paint(juce::Graphics& g)
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoJuceTreeViewItemComponent::mouseUp(const juce::MouseEvent& event)
+void DirectoryModelDemoJuceTreeViewItemComponent::mouseUp(const juce::MouseEvent &event)
 {
     if (!event.mods.isLeftButtonDown())
         return;
@@ -49,7 +49,7 @@ void DirectoryModelDemoJuceTreeViewItemComponent::mouseUp(const juce::MouseEvent
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoJuceTreeViewItemComponent::mouseDoubleClick(const juce::MouseEvent& event)
+void DirectoryModelDemoJuceTreeViewItemComponent::mouseDoubleClick(const juce::MouseEvent &event)
 {
     using vdm = vdm::DirectoryModel;
     if (event.mods.isLeftButtonDown() && vdm::IsDir(m_tree))
@@ -74,21 +74,20 @@ void DirectoryModelDemoJuceTreeViewItemComponent::onItemIsDirOpenChanged(bool is
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoJuceTreeViewItemComponent::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property)
+void DirectoryModelDemoJuceTreeViewItemComponent::valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
+                                                                           const juce::Identifier &property)
 {
     if (treeWhosePropertyHasChanged != m_tree)
         return;
 
     if (property == vdm::FileSizeUpdateHandler::Key)
     {
-        constexpr std::array<const char *, 5> sizes
-        {{
-            "B",
-            "kB",
-            "mB",
-            "gB",
-            "tB",
-        }};
+        constexpr std::array<const char *, 5> sizes{
+            {
+             "B", "kB",
+             "mB", "gB",
+             "tB", }
+        };
 
         const float bytes{ m_tree.getProperty(vdm::FileSizeUpdateHandler::Key) };
         for (int i = sizes.size() - 1; i >= 0; i--)
@@ -97,7 +96,8 @@ void DirectoryModelDemoJuceTreeViewItemComponent::valueTreePropertyChanged(juce:
             if (value <= bytes)
             {
                 const float fileSize{ bytes / value };
-                m_sizeString = juce::String(fileSize, juce::exactlyEqual(fileSize, std::floor(fileSize)) ? 0 : 2) + sizes[static_cast<std::size_t>(i)];
+                m_sizeString = juce::String(fileSize, juce::exactlyEqual(fileSize, std::floor(fileSize)) ? 0 : 2) +
+                               sizes[static_cast<std::size_t>(i)];
                 break;
             }
         }

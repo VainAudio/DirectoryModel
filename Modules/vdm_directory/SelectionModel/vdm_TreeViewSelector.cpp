@@ -6,7 +6,9 @@
 class vdm::TreeViewSelector::Impl : public vdm::SelectionModelListener
 {
 public:
-    ~Impl() override {}
+    ~Impl() override
+    {
+    }
 
     void onSelectedTreeChanged(juce::ValueTree tree) override
     {
@@ -78,8 +80,7 @@ void vdm::TreeViewSelector::keyRight()
 
 //-----------------------------------------------------------------------------
 
-template<typename Fn>
-juce::ValueTree findFirst(juce::ValueTree root, Fn fn)
+template <typename Fn> juce::ValueTree findFirst(juce::ValueTree root, Fn fn)
 {
     if (fn(root))
         return root;

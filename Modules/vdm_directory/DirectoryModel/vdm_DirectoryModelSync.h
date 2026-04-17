@@ -35,18 +35,20 @@ public:
     DirectoryModelSync();
     ~DirectoryModelSync() override;
 
-    void syncModel(DirectoryModel &model, const juce::FileFilter* fileFilter = nullptr);
+    void syncModel(DirectoryModel &model, const juce::FileFilter *fileFilter = nullptr);
     void unsyncModel(DirectoryModel &model);
     bool isModelSynced(DirectoryModel &model);
 
 private:
-    void handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename) override;
-    void messageThreadHandleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename);
+    void handleFileAction(efsw::WatchID watchid, const std::string &dir, const std::string &filename,
+                          efsw::Action action, std::string oldFilename) override;
+    void messageThreadHandleFileAction(efsw::WatchID watchid, const std::string &dir, const std::string &filename,
+                                       efsw::Action action, std::string oldFilename);
 
     struct Entry
     {
         DirectoryModel *model;
-        const juce::FileFilter* fileFilter;
+        const juce::FileFilter *fileFilter;
     };
     using ModelMap = std::map<efsw::WatchID, Entry>;
 

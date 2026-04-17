@@ -19,7 +19,7 @@ MainComponent::~MainComponent() = default;
 
 //--------------------------------------------------------------------------------
 
-void MainComponent::paint(juce::Graphics& g)
+void MainComponent::paint(juce::Graphics &g)
 {
     g.fillAll(juce::Colours::lightgrey);
 }

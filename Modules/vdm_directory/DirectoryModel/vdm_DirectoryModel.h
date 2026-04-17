@@ -47,6 +47,7 @@ public:
         Dir = 1,
         File = 2
     };
+
     static const inline juce::Identifier TypeKey{ "file_type" };
     static const inline juce::Identifier DirOpenKey{ "dir_open" };
 

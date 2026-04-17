@@ -42,7 +42,7 @@ vdm::DirectoryModel::~DirectoryModel() = default;
 
 //-----------------------------------------------------------------------------
 
-void vdm::DirectoryModel::initialize(const juce::File& root, bool populate)
+void vdm::DirectoryModel::initialize(const juce::File &root, bool populate)
 {
     if (!m_tree.isInitialized())
     {
@@ -56,7 +56,7 @@ void vdm::DirectoryModel::initialize(const juce::File& root, bool populate)
 
 //-----------------------------------------------------------------------------
 
-void vdm::DirectoryModel::initialize(const juce::File& root, const juce::FileFilter* fileFilter)
+void vdm::DirectoryModel::initialize(const juce::File &root, const juce::FileFilter *fileFilter)
 {
     initialize(root, false);
     populateTree(fileFilter);
@@ -78,7 +78,7 @@ juce::File vdm::DirectoryModel::getRootFile() const
 
 //-----------------------------------------------------------------------------
 
-void vdm::DirectoryModel::addUpdateHandler(IUpdateHandler& updateHandler)
+void vdm::DirectoryModel::addUpdateHandler(IUpdateHandler &updateHandler)
 {
     m_updateHandlers.push_back(&updateHandler);
 }
@@ -127,11 +127,12 @@ void vdm::DirectoryModel::handleModifyUpdate(juce::ValueTree tree, juce::File fi
 
 //-----------------------------------------------------------------------------
 
-void vdm::DirectoryModel::populateTree(const juce::FileFilter* filter)
+void vdm::DirectoryModel::populateTree(const juce::FileFilter *filter)
 {
     handleAddUpdate(m_tree.getRootValueTree(), m_tree.getRootFile());
 
-    const auto childFiles = m_tree.getRootFile().findChildFiles(juce::File::TypesOfFileToFind::findFilesAndDirectories, true);
+    const auto childFiles =
+        m_tree.getRootFile().findChildFiles(juce::File::TypesOfFileToFind::findFilesAndDirectories, true);
     for (const auto &child : childFiles)
     {
         auto path = child.getFullPathName().toStdString();
