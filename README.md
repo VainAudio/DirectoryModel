@@ -72,3 +72,23 @@ juce::ValueTree rootTree = model.getValueTree();
 MyTreeView treeView;
 treeView.setValueTree(rootTree);
 ```
+
+# Adding it to Your Project
+
+VainMseg is organized as a set of JUCE modules.
+To use VainMseg in your project include the `Modules` directory in `CMakeLists.txt`:
+
+```cmake
+add_subdirectory("DirectoryModel/Modules")
+```
+
+Link to the following targets:
+
+```cmake
+target_link_libraries("Project"
+    PRIVATE
+    vdm::vdm
+    vdm::vdm_directory
+    vdm::vdm_ui
+)
+```
