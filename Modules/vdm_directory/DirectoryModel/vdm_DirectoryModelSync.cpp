@@ -51,7 +51,7 @@ bool vdm::DirectoryModelSync::isModelSynced(DirectoryModel &model)
 
 void vdm::DirectoryModelSync::handleFileAction(efsw::WatchID watchid, const std::string &dir,
                                                const std::string &filename, efsw::Action action,
-                                               std::string oldFilename)
+                                               const std::string &oldFilename)
 {
     if (const auto it{ m_models.find(watchid) }; it != m_models.end())
     {
