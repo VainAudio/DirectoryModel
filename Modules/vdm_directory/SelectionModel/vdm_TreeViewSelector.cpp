@@ -105,9 +105,10 @@ void vdm::TreeViewSelector::setValueTree(juce::ValueTree tree)
     if (t.isValid())
         m_p->cursor.setValueTree(t);
     else
+    {
         m_p->cursor.setValueTree(tree);
-
-    m_p->selectCurrent();
+        m_p->selectCurrent();
+    }
 }
 
 //-----------------------------------------------------------------------------
