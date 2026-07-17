@@ -85,7 +85,7 @@ void vdm::JuceTreeView::Item::valueTreePropertyChanged(juce::ValueTree &treeWhos
 {
     if (treeWhosePropertyHasChanged == m_tree)
     {
-        if (property == vdm::DirectoryModel::DirOpenKey)
+        if (property == vdm::DirectoryModel::Keys::DirOpen)
             setOpen(vdm::DirectoryModel::IsDirOpen(m_tree));
         if (property == vdm::SelectionModel::IsSelectedKey)
             setSelected(vdm::SelectionModel::IsSelected(m_tree), false, juce::NotificationType::dontSendNotification);
