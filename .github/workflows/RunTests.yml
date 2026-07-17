@@ -6,7 +6,6 @@ on:
     branches:
       - 'main'
       - 'develop'
-      - 'linux'
 env:
   BUILD_TYPE: Release
   BUILD_DIR: Builds
@@ -26,12 +25,12 @@ jobs:
           - name: Linux
             os: ubuntu-22.04
             generator: Ninja
-          - name: macOS
-            os: macos-14
-            generator: Ninja
-          - name: Windows
-            os: windows-latest
-            generator: Ninja
+#          - name: macOS
+#            os: macos-14
+#            generator: Ninja
+#          - name: Windows
+#            os: windows-latest
+#            generator: Ninja
 
     steps:
       - uses: ilammy/msvc-dev-cmd@v1
