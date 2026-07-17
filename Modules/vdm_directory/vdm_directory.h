@@ -9,7 +9,7 @@
     website:            VainAudio.com
     license:            MIT
     minimumCppStandard: 20
-    dependencies:       vdm juce_core juce_data_structures
+    dependencies:       vdm vdm_utility juce_core juce_data_structures
 
     END_JUCE_MODULE_DECLARATION
  */

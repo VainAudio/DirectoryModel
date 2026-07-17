@@ -1,5 +1,6 @@
 #include "vdm_TreeViewSelector.h"
 #include <vdm_directory/vdm_directory.h>
+#include <vdm_utility/vdm_utility.h>
 
 //-----------------------------------------------------------------------------
 
@@ -80,28 +81,11 @@ void vdm::TreeViewSelector::keyRight()
 
 //-----------------------------------------------------------------------------
 
-template <typename Fn> juce::ValueTree findFirst(juce::ValueTree root, Fn fn)
-{
-    if (fn(root))
-        return root;
-
-    for (auto child : root)
-    {
-        auto t = findFirst(child, fn);
-        if (t.isValid())
-            return t;
-    }
-
-    return {};
-}
-
-//-----------------------------------------------------------------------------
-
 void vdm::TreeViewSelector::setValueTree(juce::ValueTree tree)
 {
     m_p->setSelectionModelValueTree(tree);
 
-    auto t = findFirst(tree, [](juce::ValueTree vt) { return vdm::SelectionModel::IsSelected(vt); });
+    auto t = Utility::findFirst(tree, [](juce::ValueTree vt) { return vdm::SelectionModel::IsSelected(vt); });
     if (t.isValid())
         m_p->cursor.setValueTree(t);
     else
