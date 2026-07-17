@@ -16,4 +16,4 @@
 
 #pragma once
 
-#include "TreeViewAlgorithms/vdm_TreeViewAlgorithms.h"
+#include "TreeViewAlgorithms/vdm_TreeAlgorithms.h"

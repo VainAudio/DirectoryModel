@@ -1,1 +1,1 @@
-#include "TreeViewAlgorithms/vdm_TreeViewAlgorithms.cpp"
+#include "TreeViewAlgorithms/vdm_TreeAlgorithms.cpp"

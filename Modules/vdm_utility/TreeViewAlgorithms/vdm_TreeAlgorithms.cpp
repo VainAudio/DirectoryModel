@@ -1,4 +1,4 @@
-#include "vdm_TreeViewAlgorithms.h"
+#include "vdm_TreeAlgorithms.h"
 #include <vdm_directory/vdm_directory.h>
 
 //--------------------------------------------------------------------------------
