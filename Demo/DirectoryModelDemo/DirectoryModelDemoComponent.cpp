@@ -13,6 +13,8 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
     m_dirModel.addUpdateHandler(m_pathUpdateHandler);
 
     m_dirModel.initialize(juce::File{ PROJECT_ROOT_DIR });
+    vdm::DirectoryModel::SetDirOpen(m_dirModel.getValueTree(), true);
+
     m_dirModelSync.syncModel(m_dirModel);
 
     m_selectionModel.setValueTree(m_dirModel.getValueTree());

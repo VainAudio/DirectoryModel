@@ -92,6 +92,9 @@ Keep in mind this isn't a very efficient tree view.
 Its main purpose is displaying a handful of files.
 Each tree view item component is created on demand, but they aren't trimmed away once the directory is closed or reused.
 
+Another thing to note about `TreeView` is that it uses some of the `DirectoryModel` keys for resizing itself.
+You can use it with generic value trees, but you need to add the appropriate keys from `DirectoryModel::Keys`.
+
 ```c++
 class MyTreeView : public vdm::TreeView
 {

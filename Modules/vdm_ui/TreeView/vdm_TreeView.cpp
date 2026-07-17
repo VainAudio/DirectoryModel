@@ -51,6 +51,9 @@ void vdm::TreeView::resized()
         m_root.setBounds(b, m_subFolderIndentation, m_itemMargin, m_itemHeight);
     else
     {
+        // if the root dir is not open and not visible you won't see anything
+        jassert(DirectoryModel::IsDirOpen(m_root.tree));
+
         if (m_root.component)
             m_root.component->setBounds({});
 
@@ -77,7 +80,7 @@ int vdm::TreeView::getMaxIndentLevel() const
 
 void vdm::TreeView::valueTreeChildAdded(juce::ValueTree &parentTree, juce::ValueTree &childWhichHasBeenAdded)
 {
-    if (auto node = getNode(parentTree))
+    if (const auto node = getNode(parentTree); node && node->isInitialized)
     {
         const int index{ parentTree.indexOf(childWhichHasBeenAdded) };
         Node newNode{
@@ -88,9 +91,9 @@ void vdm::TreeView::valueTreeChildAdded(juce::ValueTree &parentTree, juce::Value
 
         addAndMakeVisible(*newNode.component);
         node->subNodes.emplace(node->subNodes.begin() + index, std::move(newNode));
-    }
 
-    resized();
+        resized();
+    }
 }
 
 //--------------------------------------------------------------------------------
@@ -99,7 +102,8 @@ void vdm::TreeView::valueTreeChildRemoved(juce::ValueTree &parentTree, juce::Val
                                           int indexFromWhichChildWasRemoved)
 {
     juce::ignoreUnused(childWhichHasBeenRemoved);
-    if (auto node = getNode(parentTree))
+
+    if (const auto node = getNode(parentTree); node && node->isInitialized)
     {
         node->subNodes.erase(node->subNodes.begin() + indexFromWhichChildWasRemoved);
     }
@@ -112,7 +116,7 @@ void vdm::TreeView::valueTreeChildRemoved(juce::ValueTree &parentTree, juce::Val
 void vdm::TreeView::valueTreeChildOrderChanged(juce::ValueTree &parentTreeWhoseChildrenHaveMoved, int oldIndex,
                                                int newIndex)
 {
-    if (auto node = getNode(parentTreeWhoseChildrenHaveMoved))
+    if (const auto node = getNode(parentTreeWhoseChildrenHaveMoved); node && node->isInitialized)
     {
         auto moveNode{ std::move(node->subNodes[static_cast<std::size_t>(oldIndex)]) };
         node->subNodes.erase(node->subNodes.begin() + oldIndex);
@@ -132,7 +136,7 @@ void vdm::TreeView::valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyH
     if (property == DirectoryModel::Keys::DirOpen)
     {
         const auto node = getNode(treeWhosePropertyHasChanged);
-        if (node && DirectoryModel::IsDirOpen(treeWhosePropertyHasChanged))
+        if (node && !node->isInitialized)
             node->initialize(treeWhosePropertyHasChanged,
                              [this](juce::ValueTree t) { return internalCreateTreeViewItem(t); });
 
@@ -220,6 +224,8 @@ void vdm::TreeView::Node::initialize(juce::ValueTree t,
             subNode.initialize(child, fn);
             subNodes.push_back(std::move(subNode));
         }
+
+        isInitialized = true;
     }
 }
 
@@ -247,7 +253,6 @@ vdm::TreeView::Node *vdm::TreeView::getNode(juce::ValueTree tree)
             }
             else
             {
-                jassertfalse;
                 node = nullptr;
                 break;
             }

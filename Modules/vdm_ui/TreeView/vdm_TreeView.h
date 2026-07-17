@@ -63,6 +63,7 @@ private:
         juce::ValueTree tree;
 
         std::vector<Node> subNodes;
+        bool isInitialized{ false };
     };
 
     Node *getNode(juce::ValueTree tree);
