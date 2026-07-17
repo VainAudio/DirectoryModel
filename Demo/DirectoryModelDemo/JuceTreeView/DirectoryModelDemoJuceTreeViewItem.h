@@ -8,7 +8,7 @@
 
 //--------------------------------------------------------------------------------
 
-class DirectoryModelDemoJuceTreeViewItem : public vdm::JuceTreeViewItem
+class DirectoryModelDemoJuceTreeViewItem : public vdm::JuceTreeView::Item
 {
 public:
     explicit DirectoryModelDemoJuceTreeViewItem(juce::ValueTree tree);

@@ -11,7 +11,7 @@
 class DirectoryModelDemoJuceTreeView : public vdm::JuceTreeView
 {
 private:
-    std::unique_ptr<vdm::JuceTreeViewItem> createTreeViewItem(juce::ValueTree tree) override;
+    std::unique_ptr<vdm::JuceTreeView::Item> createTreeViewItem(juce::ValueTree tree) override;
 };
 
 //--------------------------------------------------------------------------------
