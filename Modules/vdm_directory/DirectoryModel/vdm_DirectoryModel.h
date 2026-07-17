@@ -52,8 +52,13 @@ public:
         File = 2
     };
 
-    static const inline juce::Identifier TypeKey{ "file_type" };
-    static const inline juce::Identifier DirOpenKey{ "dir_open" };
+    struct Keys
+    {
+        Keys() = delete;
+
+        static const inline juce::Identifier FileType{ "vdm_file_type" };
+        static const inline juce::Identifier DirOpen{ "vdm_dir_open" };
+    };
 
     static bool IsDir(juce::ValueTree tree);
     static bool IsFile(juce::ValueTree tree);

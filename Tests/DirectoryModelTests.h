@@ -179,7 +179,9 @@ public:
 
     MOCK_METHOD(void, onAdd, (juce::ValueTree, juce::File), (override));
     // MOCK_METHOD(void, onModify, (juce::ValueTree, juce::File), (override));
-    void onModify(juce::ValueTree, juce::File) override {}
+    void onModify(juce::ValueTree, juce::File) override
+    {
+    }
 };
 
 class MockModifyHandler : public vdm::DirectoryModel::IUpdateHandler
@@ -187,7 +189,9 @@ class MockModifyHandler : public vdm::DirectoryModel::IUpdateHandler
 public:
     ~MockModifyHandler() override = default;
 
-    void onAdd(juce::ValueTree, juce::File) override {}
+    void onAdd(juce::ValueTree, juce::File) override
+    {
+    }
     MOCK_METHOD(void, onModify, (juce::ValueTree, juce::File), (override));
 };
 
@@ -288,7 +292,7 @@ TEST(DirectoryModel, NameUpdateHandler)
 
     vdm::DirectoryModel model;
 
-    vdm::NameUpdateHandler nameUpdateHandler;
+    vdm::FileNameUpdateHandler nameUpdateHandler;
     model.addUpdateHandler(nameUpdateHandler);
 
     model.initialize(dir.file());
@@ -297,7 +301,11 @@ TEST(DirectoryModel, NameUpdateHandler)
 
     auto getName = [&model](const juce::String &file)
     {
-        return model.getValueTree().getChildWithName(file).getProperty(vdm::NameUpdateHandler::Key).toString().toStdString();
+        return model.getValueTree()
+            .getChildWithName(file)
+            .getProperty(vdm::FileNameUpdateHandler::Key)
+            .toString()
+            .toStdString();
     };
 
     EXPECT_EQ(getName("test1.txt"), "test1");
@@ -320,7 +328,7 @@ TEST(DirectoryModel, ExtensionUpdateHandler)
 
     vdm::DirectoryModel model;
 
-    vdm::ExtensionUpdateHandler extensionUpdateHandler;
+    vdm::FileExtensionUpdateHandler extensionUpdateHandler;
     model.addUpdateHandler(extensionUpdateHandler);
 
     model.initialize(dir.file());
@@ -329,7 +337,11 @@ TEST(DirectoryModel, ExtensionUpdateHandler)
 
     auto getExt = [&model](const juce::String &file)
     {
-        return model.getValueTree().getChildWithName(file).getProperty(vdm::ExtensionUpdateHandler::Key).toString().toStdString();
+        return model.getValueTree()
+            .getChildWithName(file)
+            .getProperty(vdm::FileExtensionUpdateHandler::Key)
+            .toString()
+            .toStdString();
     };
 
     EXPECT_EQ(getExt("test1.txt1"), "txt1");
@@ -352,7 +364,7 @@ TEST(DirectoryModel, PathUpdateHandler)
 
     vdm::DirectoryModel model;
 
-    vdm::PathUpdateHandler pathUpdateHandler;
+    vdm::FilePathUpdateHandler pathUpdateHandler;
     model.addUpdateHandler(pathUpdateHandler);
 
     model.initialize(dir.file());
@@ -361,7 +373,11 @@ TEST(DirectoryModel, PathUpdateHandler)
 
     auto getExt = [&model](const juce::String &file)
     {
-        return model.getValueTree().getChildWithName(file).getProperty(vdm::PathUpdateHandler::Key).toString().toStdString();
+        return model.getValueTree()
+            .getChildWithName(file)
+            .getProperty(vdm::FilePathUpdateHandler::Key)
+            .toString()
+            .toStdString();
     };
 
     auto getPath = [&dir](const juce::String fileName)
@@ -369,7 +385,6 @@ TEST(DirectoryModel, PathUpdateHandler)
         juce::String path{ dir.file().getFullPathName() + "/" };
         return juce::File{ path + fileName }.getFullPathName();
     };
-
 
     EXPECT_EQ(getExt("test1.txt1"), getPath("test1.txt1"));
     EXPECT_EQ(getExt("test2.txt2"), getPath("test2.txt2"));
@@ -401,9 +416,7 @@ TEST(DirectoryModel, FileSizeUpdateHandler)
     mm.runMessageThread();
 
     auto getSize = [&model](const juce::String &file)
-    {
-        return roundToInt(model.getValueTree().getChildWithName(file).getProperty(vdm::FileSizeUpdateHandler::Key));
-    };
+    { return roundToInt(model.getValueTree().getChildWithName(file).getProperty(vdm::FileSizeUpdateHandler::Key)); };
 
     EXPECT_EQ(getSize("test1.txt1"), 0);
     EXPECT_EQ(getSize("test2.txt2"), 0);
@@ -442,7 +455,7 @@ TEST(DirectoryModel, FileOrDirUpdateHandler)
 
     auto get = [](juce::ValueTree tree)
     {
-        const int k = tree.getProperty(vdm::DirectoryModel::TypeKey);
+        const int k = tree.getProperty(vdm::DirectoryModel::Keys::FileType);
         return static_cast<vdm::DirectoryModel::Type>(k);
     };
 

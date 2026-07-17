@@ -2,60 +2,58 @@
 
 //-----------------------------------------------------------------------------
 
-vdm::NameUpdateHandler::~NameUpdateHandler() = default;
+vdm::FileNameUpdateHandler::~FileNameUpdateHandler() = default;
 
 //-----------------------------------------------------------------------------
 
-void vdm::NameUpdateHandler::onAdd(juce::ValueTree tree, juce::File file)
+void vdm::FileNameUpdateHandler::onAdd(juce::ValueTree tree, juce::File file)
 {
     tree.setProperty(Key, file.getFileNameWithoutExtension(), nullptr);
 }
 
 //-----------------------------------------------------------------------------
 
-void vdm::NameUpdateHandler::onModify(juce::ValueTree, juce::File)
+void vdm::FileNameUpdateHandler::onModify(juce::ValueTree, juce::File)
 {
 }
 
 //-----------------------------------------------------------------------------
 
-vdm::ExtensionUpdateHandler::~ExtensionUpdateHandler() = default;
+vdm::FileExtensionUpdateHandler::~FileExtensionUpdateHandler() = default;
 
 //-----------------------------------------------------------------------------
 
-void vdm::ExtensionUpdateHandler::onAdd(juce::ValueTree tree, juce::File file)
+void vdm::FileExtensionUpdateHandler::onAdd(juce::ValueTree tree, juce::File file)
 {
     tree.setProperty(Key, file.getFileExtension().removeCharacters("."), nullptr);
 }
 
 //-----------------------------------------------------------------------------
 
-void vdm::ExtensionUpdateHandler::onModify(juce::ValueTree, juce::File)
+void vdm::FileExtensionUpdateHandler::onModify(juce::ValueTree, juce::File)
 {
 }
 
 //-----------------------------------------------------------------------------
 
-vdm::PathUpdateHandler::~PathUpdateHandler() = default;
+vdm::FilePathUpdateHandler::~FilePathUpdateHandler() = default;
 
 //-----------------------------------------------------------------------------
 
-void vdm::PathUpdateHandler::onAdd(juce::ValueTree tree, juce::File file)
+void vdm::FilePathUpdateHandler::onAdd(juce::ValueTree tree, juce::File file)
 {
     tree.setProperty(Key, file.getFullPathName(), nullptr);
 }
 
 //-----------------------------------------------------------------------------
 
-void vdm::PathUpdateHandler::onModify(juce::ValueTree, juce::File)
+void vdm::FilePathUpdateHandler::onModify(juce::ValueTree, juce::File)
 {
 }
 
 //-----------------------------------------------------------------------------
 
-vdm::FileSizeUpdateHandler::~FileSizeUpdateHandler()
-{
-}
+vdm::FileSizeUpdateHandler::~FileSizeUpdateHandler() = default;
 
 //-----------------------------------------------------------------------------
 

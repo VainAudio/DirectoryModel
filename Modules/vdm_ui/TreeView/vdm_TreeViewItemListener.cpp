@@ -18,12 +18,13 @@ public:
         tree.removeListener(this);
     }
 
-    void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override
+    void valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
+                                  const juce::Identifier &property) override
     {
         if (tree == treeWhosePropertyHasChanged)
         {
-            if (property == DirectoryModel::DirOpenKey)
-                item.onItemIsDirOpenChanged(tree.getProperty(DirectoryModel::DirOpenKey));
+            if (property == DirectoryModel::Keys::DirOpen)
+                item.onItemIsDirOpenChanged(tree.getProperty(DirectoryModel::Keys::DirOpen));
             else if (property == SelectionModel::IsSelectedKey)
                 item.onItemSelectedChanged(tree.getProperty(SelectionModel::IsSelectedKey));
         }

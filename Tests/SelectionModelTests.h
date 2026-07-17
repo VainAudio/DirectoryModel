@@ -252,12 +252,12 @@ TEST(SelectionModel, SelectionListener)
 TEST(DirectoryCursor, Basic)
 {
     juce::ValueTree root{ "root" };
-    root.setProperty(vdm::DirectoryModel::TypeKey, static_cast<int>(vdm::DirectoryModel::Type::Dir), nullptr);
+    root.setProperty(vdm::DirectoryModel::Keys::FileType, static_cast<int>(vdm::DirectoryModel::Type::Dir), nullptr);
 
     auto addTree = [](const char *id, juce::ValueTree parent)
     {
         juce::ValueTree v{ parent.getType().toString() + "_" + id };
-        v.setProperty(vdm::DirectoryModel::TypeKey, static_cast<int>(vdm::DirectoryModel::Type::Dir), nullptr);
+        v.setProperty(vdm::DirectoryModel::Keys::FileType, static_cast<int>(vdm::DirectoryModel::Type::Dir), nullptr);
         parent.addChild(v, -1, nullptr);
         return v;
     };
@@ -325,12 +325,12 @@ TEST(DirectoryCursor, Basic)
 TEST(DirectorySelection, Basic)
 {
     juce::ValueTree root{ "root" };
-    root.setProperty(vdm::DirectoryModel::TypeKey, static_cast<int>(vdm::DirectoryModel::Type::Dir), nullptr);
+    root.setProperty(vdm::DirectoryModel::Keys::FileType, static_cast<int>(vdm::DirectoryModel::Type::Dir), nullptr);
 
     auto addTree = [](const char *id, juce::ValueTree parent)
     {
         juce::ValueTree v{ parent.getType().toString() + "_" + id };
-        v.setProperty(vdm::DirectoryModel::TypeKey, static_cast<int>(vdm::DirectoryModel::Type::Dir), nullptr);
+        v.setProperty(vdm::DirectoryModel::Keys::FileType, static_cast<int>(vdm::DirectoryModel::Type::Dir), nullptr);
         parent.addChild(v, -1, nullptr);
         return v;
     };

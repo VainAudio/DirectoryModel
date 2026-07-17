@@ -34,7 +34,7 @@ void SelectionViewer::paint(juce::Graphics &g)
 
     for (const auto &tree : m_selectedTrees)
     {
-        auto text = juce::File{ tree.getProperty(vdm::PathUpdateHandler::Key).toString() }.getFileName();
+        auto text = juce::File{ tree.getProperty(vdm::FilePathUpdateHandler::Key).toString() }.getFileName();
 
         b.removeFromTop(2);
         auto textBounds{ b.removeFromTop(20) };

@@ -138,7 +138,7 @@ void vdm::TreeView::valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyH
 {
     juce::ignoreUnused(treeWhosePropertyHasChanged);
 
-    if (property == DirectoryModel::DirOpenKey)
+    if (property == DirectoryModel::Keys::DirOpen)
         resized();
 }
 

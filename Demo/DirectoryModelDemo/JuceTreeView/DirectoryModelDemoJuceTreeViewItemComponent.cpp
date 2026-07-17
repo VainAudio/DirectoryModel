@@ -30,7 +30,7 @@ void DirectoryModelDemoJuceTreeViewItemComponent::paint(juce::Graphics &g)
 
     g.setColour(juce::Colours::black);
 
-    const auto text = juce::File{ m_tree.getProperty(vdm::PathUpdateHandler::Key).toString() }.getFileName();
+    const auto text = juce::File{ m_tree.getProperty(vdm::FilePathUpdateHandler::Key).toString() }.getFileName();
     g.drawText(text, b, juce::Justification::left);
 
     g.drawText(m_sizeString, b.withTrimmedRight(5), juce::Justification::right);

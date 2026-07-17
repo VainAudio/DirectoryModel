@@ -4,21 +4,21 @@
 
 bool vdm::DirectoryModel::IsDir(juce::ValueTree tree)
 {
-    return static_cast<int>(tree.getProperty(TypeKey)) == static_cast<int>(Type::Dir);
+    return static_cast<int>(tree.getProperty(Keys::FileType)) == static_cast<int>(Type::Dir);
 }
 
 //-----------------------------------------------------------------------------
 
 bool vdm::DirectoryModel::IsFile(juce::ValueTree tree)
 {
-    return static_cast<int>(tree.getProperty(TypeKey)) == static_cast<int>(Type::File);
+    return static_cast<int>(tree.getProperty(Keys::FileType)) == static_cast<int>(Type::File);
 }
 
 //-----------------------------------------------------------------------------
 
 bool vdm::DirectoryModel::IsDirOpen(juce::ValueTree tree)
 {
-    return IsDir(tree) && tree.getProperty(DirOpenKey);
+    return IsDir(tree) && tree.getProperty(Keys::DirOpen);
 }
 
 //-----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ bool vdm::DirectoryModel::IsDirOpen(juce::ValueTree tree)
 void vdm::DirectoryModel::SetDirOpen(juce::ValueTree tree, bool isOpen)
 {
     if (IsDir(tree))
-        tree.setProperty(DirOpenKey, isOpen, nullptr);
+        tree.setProperty(Keys::DirOpen, isOpen, nullptr);
 }
 
 //-----------------------------------------------------------------------------
@@ -111,7 +111,7 @@ void vdm::DirectoryModel::removeFile(juce::File file)
 void vdm::DirectoryModel::handleAddUpdate(juce::ValueTree tree, juce::File file) const
 {
     const Type type{ file.isDirectory() ? Type::Dir : Type::File };
-    tree.setProperty(TypeKey, static_cast<int>(type), nullptr);
+    tree.setProperty(Keys::FileType, static_cast<int>(type), nullptr);
 
     for (auto &i : m_updateHandlers)
         i->onAdd(tree, file);
