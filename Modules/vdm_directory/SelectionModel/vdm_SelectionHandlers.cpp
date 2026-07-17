@@ -1,6 +1,7 @@
 #include "vdm_SelectionHandlers.h"
 #include <vdm_directory/vdm_directory.h>
 #include <ranges>
+#include <vdm_utility/vdm_utility.h>
 
 //-----------------------------------------------------------------------------
 
@@ -55,23 +56,6 @@ vdm::GroupMultiSelectionHandler::~GroupMultiSelectionHandler() = default;
 
 //-----------------------------------------------------------------------------
 
-template <typename Fn> juce::ValueTree FindFirst(juce::ValueTree root, const Fn &fn)
-{
-    if (fn(root))
-        return root;
-
-    for (const auto &child : root)
-    {
-        auto v = FindFirst(child, fn);
-        if (v.isValid())
-            return v;
-    }
-
-    return {};
-}
-
-//-----------------------------------------------------------------------------
-
 void vdm::GroupMultiSelectionHandler::selectTree(const std::span<juce::ValueTree> &previouslySelected,
                                                  juce::ValueTree newSelection)
 {
@@ -100,7 +84,7 @@ void vdm::GroupMultiSelectionHandler::selectTree(const std::span<juce::ValueTree
         return t;
     }();
 
-    const auto first{ FindFirst(root, [to, from](auto vt) { return vt == to || vt == from; }) };
+    const auto first{ Utility::findFirst(root, [to, from](auto vt) { return vt == to || vt == from; }) };
 
     vdm::TreeViewCursor dir{ from };
     while (to != dir.getValueTree())
