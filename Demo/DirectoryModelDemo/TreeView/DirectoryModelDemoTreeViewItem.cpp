@@ -61,7 +61,7 @@ void DirectoryModelDemoTreeViewItem::paint(juce::Graphics &g)
         g.fillPath(p);
     }
 
-    auto text = juce::File{ m_tree.getProperty(vdm::PathUpdateHandler::Key).toString() }.getFileName();
+    auto text = juce::File{ m_tree.getProperty(vdm::FilePathUpdateHandler::Key).toString() }.getFileName();
     g.drawText(text, b, juce::Justification::left);
 
     g.drawText(m_sizeString, b.withTrimmedRight(5), juce::Justification::right);

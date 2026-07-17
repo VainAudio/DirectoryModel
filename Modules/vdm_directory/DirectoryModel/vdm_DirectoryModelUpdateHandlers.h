@@ -11,15 +11,15 @@ BEGIN_VDM_NAMESPACE
 
 //-----------------------------------------------------------------------------
 /**
- * @class NameUpdateHandler
+ * @class FileNameUpdateHandler
  * @brief set the file name without extension (file.txt -> file)
  */
-class NameUpdateHandler final : public DirectoryModel::IUpdateHandler
+class FileNameUpdateHandler final : public DirectoryModel::IUpdateHandler
 {
 public:
-    static const inline juce::Identifier Key{ "name" };
+    static const inline juce::Identifier Key{ "vdm_file_name" };
 
-    ~NameUpdateHandler() override;
+    ~FileNameUpdateHandler() override;
 
     void onAdd(juce::ValueTree, juce::File) override;
     void onModify(juce::ValueTree, juce::File) override;
@@ -27,15 +27,15 @@ public:
 
 //-----------------------------------------------------------------------------
 /**
- * @class ExtensionUpdateHandler
+ * @class FileExtensionUpdateHandler
  * @brief set the file extension (file.txt -> txt)
  */
-class ExtensionUpdateHandler final : public DirectoryModel::IUpdateHandler
+class FileExtensionUpdateHandler final : public DirectoryModel::IUpdateHandler
 {
 public:
-    static const inline juce::Identifier Key{ "extension" };
+    static const inline juce::Identifier Key{ "vdm_file_extension" };
 
-    ~ExtensionUpdateHandler() override;
+    ~FileExtensionUpdateHandler() override;
 
     void onAdd(juce::ValueTree, juce::File) override;
     void onModify(juce::ValueTree, juce::File) override;
@@ -43,15 +43,15 @@ public:
 
 //-----------------------------------------------------------------------------
 /**
- * @class PathUpdateHandler
+ * @class FilePathUpdateHandler
  * @brief set the full file path
  */
-class PathUpdateHandler final : public DirectoryModel::IUpdateHandler
+class FilePathUpdateHandler final : public DirectoryModel::IUpdateHandler
 {
 public:
-    static const inline juce::Identifier Key{ "path" };
+    static const inline juce::Identifier Key{ "vdm_file_path" };
 
-    ~PathUpdateHandler() override;
+    ~FilePathUpdateHandler() override;
 
     void onAdd(juce::ValueTree, juce::File) override;
     void onModify(juce::ValueTree, juce::File) override;
@@ -65,7 +65,7 @@ public:
 class FileSizeUpdateHandler final : public DirectoryModel::IUpdateHandler
 {
 public:
-    static const inline juce::Identifier Key{ "file_size" };
+    static const inline juce::Identifier Key{ "vdm_file_size" };
 
     ~FileSizeUpdateHandler() override;
 

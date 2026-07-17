@@ -288,7 +288,7 @@ TEST(DirectoryModel, NameUpdateHandler)
 
     vdm::DirectoryModel model;
 
-    vdm::NameUpdateHandler nameUpdateHandler;
+    vdm::FileNameUpdateHandler nameUpdateHandler;
     model.addUpdateHandler(nameUpdateHandler);
 
     model.initialize(dir.file());
@@ -297,7 +297,7 @@ TEST(DirectoryModel, NameUpdateHandler)
 
     auto getName = [&model](const juce::String &file)
     {
-        return model.getValueTree().getChildWithName(file).getProperty(vdm::NameUpdateHandler::Key).toString().toStdString();
+        return model.getValueTree().getChildWithName(file).getProperty(vdm::FileNameUpdateHandler::Key).toString().toStdString();
     };
 
     EXPECT_EQ(getName("test1.txt"), "test1");
@@ -320,7 +320,7 @@ TEST(DirectoryModel, ExtensionUpdateHandler)
 
     vdm::DirectoryModel model;
 
-    vdm::ExtensionUpdateHandler extensionUpdateHandler;
+    vdm::FileExtensionUpdateHandler extensionUpdateHandler;
     model.addUpdateHandler(extensionUpdateHandler);
 
     model.initialize(dir.file());
@@ -329,7 +329,7 @@ TEST(DirectoryModel, ExtensionUpdateHandler)
 
     auto getExt = [&model](const juce::String &file)
     {
-        return model.getValueTree().getChildWithName(file).getProperty(vdm::ExtensionUpdateHandler::Key).toString().toStdString();
+        return model.getValueTree().getChildWithName(file).getProperty(vdm::FileExtensionUpdateHandler::Key).toString().toStdString();
     };
 
     EXPECT_EQ(getExt("test1.txt1"), "txt1");
@@ -352,7 +352,7 @@ TEST(DirectoryModel, PathUpdateHandler)
 
     vdm::DirectoryModel model;
 
-    vdm::PathUpdateHandler pathUpdateHandler;
+    vdm::FilePathUpdateHandler pathUpdateHandler;
     model.addUpdateHandler(pathUpdateHandler);
 
     model.initialize(dir.file());
@@ -361,7 +361,7 @@ TEST(DirectoryModel, PathUpdateHandler)
 
     auto getExt = [&model](const juce::String &file)
     {
-        return model.getValueTree().getChildWithName(file).getProperty(vdm::PathUpdateHandler::Key).toString().toStdString();
+        return model.getValueTree().getChildWithName(file).getProperty(vdm::FilePathUpdateHandler::Key).toString().toStdString();
     };
 
     auto getPath = [&dir](const juce::String fileName)

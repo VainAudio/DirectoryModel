@@ -20,10 +20,10 @@ public:
     void modifierKeysChanged(const juce::ModifierKeys &modifiers) override;
 
 private:
-    vdm::NameUpdateHandler m_nameUpdateHandler;
+    vdm::FileNameUpdateHandler m_nameUpdateHandler;
     vdm::FileSizeUpdateHandler m_fileSizeUpdateHandler;
-    vdm::ExtensionUpdateHandler m_extensionUpdateHandler;
-    vdm::PathUpdateHandler m_pathUpdateHandler;
+    vdm::FileExtensionUpdateHandler m_extensionUpdateHandler;
+    vdm::FilePathUpdateHandler m_pathUpdateHandler;
     vdm::DirectoryModel m_dirModel;
     vdm::DirectoryModelSync m_dirModelSync;
     vdm::SelectionModel m_selectionModel;
