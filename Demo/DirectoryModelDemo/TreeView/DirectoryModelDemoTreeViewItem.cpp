@@ -6,6 +6,7 @@ DirectoryModelDemoTreeViewItem::DirectoryModelDemoTreeViewItem(juce::ValueTree t
     : vdm::TreeViewItemListener(tree)
     , m_tree(tree)
 {
+    DBG("constructor " << tree.getProperty(vdm::FileNameUpdateHandler::Key).toString());
     m_tree.addListener(this);
 
     for (int i = 0; i < m_tree.getNumProperties(); i++)

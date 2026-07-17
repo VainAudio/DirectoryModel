@@ -44,26 +44,31 @@ public:
     int getMaxIndentLevel() const;
 
 private:
-    void valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenAdded) override;
-    void valueTreeChildRemoved(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved) override;
-    void valueTreeChildOrderChanged(juce::ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex) override;
-    void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property) override;
+    void valueTreeChildAdded(juce::ValueTree &parentTree, juce::ValueTree &childWhichHasBeenAdded) override;
+    void valueTreeChildRemoved(juce::ValueTree &parentTree, juce::ValueTree &childWhichHasBeenRemoved,
+                               int indexFromWhichChildWasRemoved) override;
+    void valueTreeChildOrderChanged(juce::ValueTree &parentTreeWhoseChildrenHaveMoved, int oldIndex,
+                                    int newIndex) override;
+    void valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
+                                  const juce::Identifier &property) override;
 
     struct Node
     {
         int getMaxIndentLevel() const;
         int getHeight(int itemHeight, int margin) const;
         void setBounds(juce::Rectangle<int> &bounds, int indent, int margin, int height);
-        void initialize(juce::ValueTree t, const std::function<std::unique_ptr<juce::Component>(juce::ValueTree)>& fn);
+        void initialize(juce::ValueTree t, const std::function<std::unique_ptr<juce::Component>(juce::ValueTree)> &fn);
 
         std::unique_ptr<juce::Component> component;
         juce::ValueTree tree;
 
         std::vector<Node> subNodes;
+        bool isInitialized{ false };
     };
 
     Node *getNode(juce::ValueTree tree);
     virtual std::unique_ptr<juce::Component> createTreeViewItem(juce::ValueTree tree) = 0;
+    std::unique_ptr<juce::Component> internalCreateTreeViewItem(juce::ValueTree tree);
 
     Node m_root;
 
