@@ -23,7 +23,11 @@ BEGIN_VDM_NAMESPACE
  * that support things like directories being open or closed and file types.
  * Custom properties can also be added using IUpdateHandler.
  *
+ * Use a DirectoryModelSync to update the DirectoryModel live as changes
+ * are made to the file contents on disk.
+ *
  * @see IUpdateHandler
+ * @see DirectoryModelSync
  */
 class DirectoryModel
 {

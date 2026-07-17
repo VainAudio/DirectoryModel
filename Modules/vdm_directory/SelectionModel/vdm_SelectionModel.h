@@ -31,6 +31,7 @@ public:
     /**
      * @class ISelectionHandler
      * @brief Create custom selection logic
+     * @see vdm_SelectionHandlers.h
      */
     class ISelectionHandler
     {
