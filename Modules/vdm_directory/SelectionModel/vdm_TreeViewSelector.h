@@ -23,7 +23,7 @@ class TreeViewSelector
 {
 public:
     TreeViewSelector();
-    TreeViewSelector(juce::ValueTree tree);
+    explicit TreeViewSelector(juce::ValueTree tree);
     ~TreeViewSelector();
 
     void keyUp();

@@ -15,7 +15,7 @@ vdm::DirectoryModelSync::~DirectoryModelSync()
 
 //-----------------------------------------------------------------------------
 
-void vdm::DirectoryModelSync::syncModel(DirectoryModel& model, const juce::FileFilter* fileFilter)
+void vdm::DirectoryModelSync::syncModel(DirectoryModel &model, const juce::FileFilter *fileFilter)
 {
     if (auto it{ findModel(model) }; it == m_models.end())
     {
@@ -29,7 +29,7 @@ void vdm::DirectoryModelSync::syncModel(DirectoryModel& model, const juce::FileF
 
 //-----------------------------------------------------------------------------
 
-void vdm::DirectoryModelSync::unsyncModel(DirectoryModel& model)
+void vdm::DirectoryModelSync::unsyncModel(DirectoryModel &model)
 {
     if (const auto it{ findModel(model) }; it != m_models.end())
     {
@@ -42,21 +42,23 @@ void vdm::DirectoryModelSync::unsyncModel(DirectoryModel& model)
 
 //-----------------------------------------------------------------------------
 
-bool vdm::DirectoryModelSync::isModelSynced(DirectoryModel& model)
+bool vdm::DirectoryModelSync::isModelSynced(DirectoryModel &model)
 {
     return findModel(model) != m_models.end();
 }
 
 //-----------------------------------------------------------------------------
 
-void vdm::DirectoryModelSync::handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename)
+void vdm::DirectoryModelSync::handleFileAction(efsw::WatchID watchid, const std::string &dir,
+                                               const std::string &filename, efsw::Action action,
+                                               const std::string &oldFilename)
 {
     if (const auto it{ m_models.find(watchid) }; it != m_models.end())
     {
         juce::File f{ dir + filename };
         const auto root{ it->second.model->getRootFile() };
 
-        if(f != root && !f.isAChildOf(root))
+        if (f != root && !f.isAChildOf(root))
         {
             // TODO receiving events here for the parent to root - shouldnt be?
             // jassertfalse;
@@ -77,7 +79,9 @@ void vdm::DirectoryModelSync::handleFileAction(efsw::WatchID watchid, const std:
 
 //-----------------------------------------------------------------------------
 
-void vdm::DirectoryModelSync::messageThreadHandleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename)
+void vdm::DirectoryModelSync::messageThreadHandleFileAction(efsw::WatchID watchid, const std::string &dir,
+                                                            const std::string &filename, efsw::Action action,
+                                                            std::string oldFilename)
 {
     juce::ignoreUnused(watchid, oldFilename);
     jassert(juce::MessageManager::existsAndIsCurrentThread());
@@ -106,20 +110,20 @@ void vdm::DirectoryModelSync::messageThreadHandleFileAction(efsw::WatchID watchi
     switch (action)
     {
     case efsw::Action::Add:
-        {
-            model->addFile(file);
-            break;
-        }
+    {
+        model->addFile(file);
+        break;
+    }
     case efsw::Action::Delete:
-        {
-            model->removeFile(file);
-            break;
-        }
+    {
+        model->removeFile(file);
+        break;
+    }
     case efsw::Action::Modified:
-        {
-            model->updateFile(file);
-            break;
-        }
+    {
+        model->updateFile(file);
+        break;
+    }
     case efsw::Action::Moved:
         messageThreadHandleFileAction(watchid, dir, oldFilename, efsw::Action::Delete, {});
         messageThreadHandleFileAction(watchid, dir, filename, efsw::Action::Add, {});
@@ -131,9 +135,10 @@ void vdm::DirectoryModelSync::messageThreadHandleFileAction(efsw::WatchID watchi
 
 //-----------------------------------------------------------------------------
 
-std::map<efsw::WatchID, vdm::DirectoryModelSync::Entry>::iterator vdm::DirectoryModelSync::findModel(DirectoryModel& model)
+std::map<efsw::WatchID, vdm::DirectoryModelSync::Entry>::iterator
+vdm::DirectoryModelSync::findModel(DirectoryModel &model)
 {
-    return std::ranges::find_if(m_models,[&model](auto pair) { return pair.second.model == &model; });
+    return std::ranges::find_if(m_models, [&model](auto pair) { return pair.second.model == &model; });
 }
 
 //-----------------------------------------------------------------------------

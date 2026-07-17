@@ -28,7 +28,7 @@ public:
     void setSelectionModel(SelectionModel &model);
     void setSelectionModelValueTree(juce::ValueTree tree);
 
-    virtual void onSelectedTreeChanged(juce::ValueTree tree) = 0;
+    virtual void onTreeSelectionChanged(juce::ValueTree treeWithChangedSelectionState) = 0;
 
 private:
     class Impl;

@@ -8,7 +8,8 @@ vdm::SingleSelectionHandler::~SingleSelectionHandler() = default;
 
 //-----------------------------------------------------------------------------
 
-void vdm::SingleSelectionHandler::selectTree(const std::span<juce::ValueTree>& previouslySelected, juce::ValueTree newSelection)
+void vdm::SingleSelectionHandler::selectTree(const std::span<juce::ValueTree> &previouslySelected,
+                                             juce::ValueTree newSelection)
 {
     for (auto t : previouslySelected)
         t.setProperty(SelectionModel::IsSelectedKey, false, nullptr);
@@ -22,7 +23,8 @@ vdm::PathSelectionHandler::~PathSelectionHandler() = default;
 
 //-----------------------------------------------------------------------------
 
-void vdm::PathSelectionHandler::selectTree(const std::span<juce::ValueTree>& previouslySelected, juce::ValueTree newSelection)
+void vdm::PathSelectionHandler::selectTree(const std::span<juce::ValueTree> &previouslySelected,
+                                           juce::ValueTree newSelection)
 {
     std::stack<juce::ValueTree> newPath;
     auto t = newSelection;
@@ -53,8 +55,7 @@ vdm::GroupMultiSelectionHandler::~GroupMultiSelectionHandler() = default;
 
 //-----------------------------------------------------------------------------
 
-template<typename Fn>
-juce::ValueTree FindFirst(juce::ValueTree root, const Fn &fn)
+template <typename Fn> juce::ValueTree FindFirst(juce::ValueTree root, const Fn &fn)
 {
     if (fn(root))
         return root;
@@ -71,7 +72,8 @@ juce::ValueTree FindFirst(juce::ValueTree root, const Fn &fn)
 
 //-----------------------------------------------------------------------------
 
-void vdm::GroupMultiSelectionHandler::selectTree(const std::span<juce::ValueTree>& previouslySelected, juce::ValueTree newSelection)
+void vdm::GroupMultiSelectionHandler::selectTree(const std::span<juce::ValueTree> &previouslySelected,
+                                                 juce::ValueTree newSelection)
 {
     if (previouslySelected.empty())
     {
@@ -98,7 +100,7 @@ void vdm::GroupMultiSelectionHandler::selectTree(const std::span<juce::ValueTree
         return t;
     }();
 
-    const auto first{ FindFirst(root, [to, from](auto vt) { return vt == to || vt == from; })};
+    const auto first{ FindFirst(root, [to, from](auto vt) { return vt == to || vt == from; }) };
 
     vdm::TreeViewCursor dir{ from };
     while (to != dir.getValueTree())
@@ -117,9 +119,11 @@ vdm::IndividualMultiSelectionHandler::~IndividualMultiSelectionHandler() = defau
 
 //-----------------------------------------------------------------------------
 
-void vdm::IndividualMultiSelectionHandler::selectTree(const std::span<juce::ValueTree>& previouslySelected, juce::ValueTree newSelection)
+void vdm::IndividualMultiSelectionHandler::selectTree(const std::span<juce::ValueTree> &previouslySelected,
+                                                      juce::ValueTree newSelection)
 {
-    const bool isAlreadySelected{ std::ranges::find_if(previouslySelected, [newSelection](auto t){ return t == newSelection; }) != previouslySelected.end() };
+    const bool isAlreadySelected{ std::ranges::find_if(previouslySelected, [newSelection](auto t)
+                                                       { return t == newSelection; }) != previouslySelected.end() };
     newSelection.setProperty(SelectionModel::IsSelectedKey, !isAlreadySelected, nullptr);
 }
 

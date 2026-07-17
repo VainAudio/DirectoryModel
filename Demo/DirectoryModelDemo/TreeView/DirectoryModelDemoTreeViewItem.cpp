@@ -24,7 +24,7 @@ DirectoryModelDemoTreeViewItem::~DirectoryModelDemoTreeViewItem()
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoTreeViewItem::paint(juce::Graphics& g)
+void DirectoryModelDemoTreeViewItem::paint(juce::Graphics &g)
 {
     auto b{ getLocalBounds() };
 
@@ -47,7 +47,8 @@ void DirectoryModelDemoTreeViewItem::paint(juce::Graphics& g)
     {
         juce::Graphics::ScopedSaveState state{ g };
         if (!vdm::DirectoryModel::IsDirOpen(m_tree))
-            g.addTransform(juce::AffineTransform::rotation(-juce::MathConstants<float>::halfPi, ab.getCentreX(), ab.getCentreY()));
+            g.addTransform(
+                juce::AffineTransform::rotation(-juce::MathConstants<float>::halfPi, ab.getCentreX(), ab.getCentreY()));
 
         constexpr float delta{ 7.0f };
         ab.reduce(delta, delta);
@@ -68,12 +69,13 @@ void DirectoryModelDemoTreeViewItem::paint(juce::Graphics& g)
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoTreeViewItem::mouseUp(const juce::MouseEvent& event)
+void DirectoryModelDemoTreeViewItem::mouseUp(const juce::MouseEvent &event)
 {
     if (!event.mods.isLeftButtonDown())
         return;
 
-    if (vdm::DirectoryModel::IsDir(m_tree) && getLocalBounds().removeFromLeft(getHeight()).toFloat().contains(event.position))
+    if (vdm::DirectoryModel::IsDir(m_tree) &&
+        getLocalBounds().removeFromLeft(getHeight()).toFloat().contains(event.position))
         vdm::DirectoryModel::ToggleIsDirOpen(m_tree);
     else
         vdm::SelectionModel::RequestSelectTree(m_tree);
@@ -81,7 +83,7 @@ void DirectoryModelDemoTreeViewItem::mouseUp(const juce::MouseEvent& event)
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoTreeViewItem::mouseEnter(const juce::MouseEvent& event)
+void DirectoryModelDemoTreeViewItem::mouseEnter(const juce::MouseEvent &event)
 {
     juce::ignoreUnused(event);
     repaint();
@@ -89,7 +91,7 @@ void DirectoryModelDemoTreeViewItem::mouseEnter(const juce::MouseEvent& event)
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoTreeViewItem::mouseExit(const juce::MouseEvent& event)
+void DirectoryModelDemoTreeViewItem::mouseExit(const juce::MouseEvent &event)
 {
     juce::ignoreUnused(event);
     repaint();
@@ -97,7 +99,7 @@ void DirectoryModelDemoTreeViewItem::mouseExit(const juce::MouseEvent& event)
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoTreeViewItem::mouseDoubleClick(const juce::MouseEvent& event)
+void DirectoryModelDemoTreeViewItem::mouseDoubleClick(const juce::MouseEvent &event)
 {
     using vdm = vdm::DirectoryModel;
     if (event.mods.isLeftButtonDown() && vdm::IsDir(m_tree))
@@ -122,21 +124,20 @@ void DirectoryModelDemoTreeViewItem::onItemIsDirOpenChanged(bool isDirOpen)
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoTreeViewItem::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property)
+void DirectoryModelDemoTreeViewItem::valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
+                                                              const juce::Identifier &property)
 {
     if (treeWhosePropertyHasChanged != m_tree)
         return;
 
     if (property == vdm::FileSizeUpdateHandler::Key)
     {
-        constexpr std::array<const char *, 5> sizes
-        {{
-            "B",
-            "kB",
-            "mB",
-            "gB",
-            "tB",
-        }};
+        constexpr std::array<const char *, 5> sizes{
+            {
+             "B", "kB",
+             "mB", "gB",
+             "tB", }
+        };
 
         const float bytes{ m_tree.getProperty(vdm::FileSizeUpdateHandler::Key) };
         for (int i = sizes.size() - 1; i >= 0; i--)
@@ -145,7 +146,8 @@ void DirectoryModelDemoTreeViewItem::valueTreePropertyChanged(juce::ValueTree& t
             if (value <= bytes)
             {
                 const float fileSize{ bytes / value };
-                m_sizeString = juce::String(fileSize, juce::exactlyEqual(fileSize, std::floor(fileSize)) ? 0 : 2) + sizes[static_cast<std::size_t>(i)];
+                m_sizeString = juce::String(fileSize, juce::exactlyEqual(fileSize, std::floor(fileSize)) ? 0 : 2) +
+                               sizes[static_cast<std::size_t>(i)];
                 break;
             }
         }

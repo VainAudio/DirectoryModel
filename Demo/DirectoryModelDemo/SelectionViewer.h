@@ -14,10 +14,10 @@ class SelectionViewer
 public:
     ~SelectionViewer() override;
 
-    void paint(juce::Graphics& g) override;
+    void paint(juce::Graphics &g) override;
 
 private:
-    void onSelectedTreeChanged(juce::ValueTree tree) override;
+    void onTreeSelectionChanged(juce::ValueTree tree) override;
 
     std::vector<juce::ValueTree> m_selectedTrees;
 };
