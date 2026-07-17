@@ -1,4 +1,5 @@
 #include "vdm_SelectionModelListener.h"
+#include <vdm_utility/vdm_utility.h>
 
 //-----------------------------------------------------------------------------
 
@@ -25,27 +26,20 @@ public:
         }
     }
 
-    template <typename Fn> static void traverseApply(juce::ValueTree tree, const Fn &fn)
-    {
-        fn(tree);
-        for (auto child : tree)
-            traverseApply(child, fn);
-    }
-
     void valueTreeChildRemoved(juce::ValueTree &parentTree, juce::ValueTree &childWhichHasBeenRemoved,
                                int indexFromWhichChildWasRemoved) override
     {
         juce::ignoreUnused(parentTree, indexFromWhichChildWasRemoved);
 
-        traverseApply(childWhichHasBeenRemoved,
-                      [this](juce::ValueTree t)
-                      {
-                          if (SelectionModel::IsSelected(t))
-                          {
-                              t.setProperty(SelectionModel::IsSelectedKey, false, nullptr);
-                              listener.onTreeSelectionChanged(t);
-                          }
-                      });
+        Utility::forEach(childWhichHasBeenRemoved,
+                         [this](juce::ValueTree t)
+                         {
+                             if (SelectionModel::IsSelected(t))
+                             {
+                                 t.setProperty(SelectionModel::IsSelectedKey, false, nullptr);
+                                 listener.onTreeSelectionChanged(t);
+                             }
+                         });
     }
 
     void sendCallbacks()
@@ -56,7 +50,7 @@ public:
                 valueTreePropertyChanged(t, SelectionModel::IsSelectedKey);
         };
 
-        traverseApply(tree, fn);
+        Utility::forEach(tree, fn);
     }
 
     SelectionModelListener &listener;

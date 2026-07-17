@@ -33,6 +33,14 @@ namespace Utility
 
         return {};
     }
+
+    template <typename Fn> static void forEach(juce::ValueTree tree, const Fn &fn)
+    {
+        fn(tree);
+        for (auto child : tree)
+            forEach(child, fn);
+    }
+
 }
 
 //--------------------------------------------------------------------------------
