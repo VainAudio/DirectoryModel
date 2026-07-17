@@ -5,16 +5,7 @@
 
 void vdm::TreeView::setValueTree(juce::ValueTree tree)
 {
-    m_root.initialize(tree,
-                      [this](auto t)
-                      {
-                          auto ptr{ createTreeViewItem(t) };
-
-                          if (ptr)
-                              addAndMakeVisible(*ptr);
-
-                          return std::move(ptr);
-                      });
+    m_root.initialize(tree, [this](juce::ValueTree t) { return internalCreateTreeViewItem(t); });
 
     m_root.tree.addListener(this);
 }
@@ -139,7 +130,14 @@ void vdm::TreeView::valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyH
     juce::ignoreUnused(treeWhosePropertyHasChanged);
 
     if (property == DirectoryModel::Keys::DirOpen)
+    {
+        const auto node = getNode(treeWhosePropertyHasChanged);
+        if (node && DirectoryModel::IsDirOpen(treeWhosePropertyHasChanged))
+            node->initialize(treeWhosePropertyHasChanged,
+                             [this](juce::ValueTree t) { return internalCreateTreeViewItem(t); });
+
         resized();
+    }
 }
 
 //--------------------------------------------------------------------------------
@@ -210,10 +208,13 @@ void vdm::TreeView::Node::initialize(juce::ValueTree t,
                                      const std::function<std::unique_ptr<juce::Component>(juce::ValueTree)> &fn)
 {
     tree = t;
-    component = fn(t);
-    if (component)
+
+    if (!component)
+        component = fn(t);
+
+    if (DirectoryModel::IsDirOpen(t) && subNodes.empty())
     {
-        for (auto child : tree)
+        for (const auto child : tree)
         {
             Node subNode;
             subNode.initialize(child, fn);
@@ -257,6 +258,18 @@ vdm::TreeView::Node *vdm::TreeView::getNode(juce::ValueTree tree)
 
     jassertfalse;
     return nullptr;
+}
+
+//--------------------------------------------------------------------------------
+
+std::unique_ptr<juce::Component> vdm::TreeView::internalCreateTreeViewItem(juce::ValueTree tree)
+{
+    auto ptr{ createTreeViewItem(tree) };
+
+    if (ptr)
+        addAndMakeVisible(*ptr);
+
+    return ptr;
 }
 
 //--------------------------------------------------------------------------------
