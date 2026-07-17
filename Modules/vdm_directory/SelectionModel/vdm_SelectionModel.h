@@ -40,9 +40,9 @@ public:
         virtual void selectTree(const std::span<juce::ValueTree> &previouslySelected, juce::ValueTree newSelection) = 0;
     };
 
-    static const inline juce::Identifier ModeKey{ "selection_mode" };
-    static const inline juce::Identifier IsSelectedKey{ "is_selected" };
-    static const inline juce::Identifier RequestSelectionKey{ "request_selection" };
+    static const inline juce::Identifier ModeKey{ "vdm_selection_mode" };
+    static const inline juce::Identifier IsSelectedKey{ "vdm_is_selected" };
+    static const inline juce::Identifier RequestSelectionKey{ "vdm_request_selection" };
 
     static void RequestSelectTree(juce::ValueTree tree, bool select = true);
     static void RequestToggleSelection(juce::ValueTree tree);
