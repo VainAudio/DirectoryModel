@@ -53,6 +53,34 @@ private:
 };
 ```
 
+## SelectionModel
+
+The library supports selecting trees within the `DirectoryModel`.
+To do so, you need to add a `SelectionModel` and at least one `ISelectionHandler`.
+The `SelectionModel` responds to selection requests and passes them on to the `ISelectionHandler` so that custom selection logic can be implemented.
+
+```c++
+class SelectionDirectoryModel
+{
+public:
+    MyDirectoryModel()
+    {
+        model.initialize('/root/directory/');
+        sync.syncModel(model);
+
+        selectionModel.addSelectionHandler("default", selector);
+        selectionModel.setSelectionMode("default");
+        selectionModel.setValueTree(model.getValueTree());
+    }
+    
+private:
+    vdm::DirectoryModel model;
+    
+    vdm::SelectionModel selection;
+    vdm::SingleSelectionHandler selector;
+};
+```
+
 ## TreeView
 
 The `vdm_ui` module has a `TreeView` base class.
