@@ -34,6 +34,12 @@ namespace Utility
         return {};
     }
 
+    /**
+     *
+     * @tparam Fn a callable that takes a single value tree as an argument and returns void
+     * @param tree root tree to begin from
+     * @param fn function to be applied to everything
+     */
     template <typename Fn> static void forEach(juce::ValueTree tree, const Fn &fn)
     {
         fn(tree);
