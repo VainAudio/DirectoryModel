@@ -1,20 +1,37 @@
-#include "vdm_JuceTreeViewItem.h"
+#include "vdm_TreeAlgorithms.h"
 #include <vdm_directory/vdm_directory.h>
 
 //--------------------------------------------------------------------------------
 
-vdm::JuceTreeViewItem::JuceTreeViewItem() = default;
+vdm::JuceTreeView::~JuceTreeView()
+{
+    setRootItem(nullptr);
+}
 
 //--------------------------------------------------------------------------------
 
-vdm::JuceTreeViewItem::~JuceTreeViewItem()
+void vdm::JuceTreeView::setValueTree(juce::ValueTree tree)
+{
+    m_p = createTreeViewItem(tree);
+    setRootItem(m_p.get());
+}
+
+//--------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------------
+
+vdm::JuceTreeView::Item::Item() = default;
+
+//--------------------------------------------------------------------------------
+
+vdm::JuceTreeView::Item::~Item()
 {
     m_tree.removeListener(this);
 }
 
 //--------------------------------------------------------------------------------
 
-void vdm::JuceTreeViewItem::setValueTree(juce::ValueTree tree)
+void vdm::JuceTreeView::Item::setValueTree(juce::ValueTree tree)
 {
     clearSubItems();
 
@@ -23,7 +40,7 @@ void vdm::JuceTreeViewItem::setValueTree(juce::ValueTree tree)
     for (int i = 0; i < tree.getNumChildren(); i++)
     {
         auto child = tree.getChild(i);
-        vdm::JuceTreeViewItem::valueTreeChildAdded(tree, child);
+        vdm::JuceTreeView::Item::valueTreeChildAdded(tree, child);
     }
     if (vdm::DirectoryModel::IsDirOpen(tree))
         setOpen(true);
@@ -33,7 +50,7 @@ void vdm::JuceTreeViewItem::setValueTree(juce::ValueTree tree)
 
 //--------------------------------------------------------------------------------
 
-bool vdm::JuceTreeViewItem::mightContainSubItems()
+bool vdm::JuceTreeView::Item::mightContainSubItems()
 {
     return vdm::DirectoryModel::IsDir(m_tree);
     return m_tree.getNumChildren() > 0;
@@ -41,14 +58,14 @@ bool vdm::JuceTreeViewItem::mightContainSubItems()
 
 //--------------------------------------------------------------------------------
 
-std::unique_ptr<juce::Component> vdm::JuceTreeViewItem::createItemComponent()
+std::unique_ptr<juce::Component> vdm::JuceTreeView::Item::createItemComponent()
 {
     return createItemComponent(m_tree);
 }
 
 //--------------------------------------------------------------------------------
 
-void vdm::JuceTreeViewItem::itemOpennessChanged(bool isNowOpen)
+void vdm::JuceTreeView::Item::itemOpennessChanged(bool isNowOpen)
 {
     if (vdm::DirectoryModel::IsDir(m_tree))
         vdm::DirectoryModel::SetDirOpen(m_tree, isNowOpen);
@@ -56,14 +73,15 @@ void vdm::JuceTreeViewItem::itemOpennessChanged(bool isNowOpen)
 
 //--------------------------------------------------------------------------------
 
-void vdm::JuceTreeViewItem::itemSelectionChanged(bool isNowSelected)
+void vdm::JuceTreeView::Item::itemSelectionChanged(bool isNowSelected)
 {
     vdm::SelectionModel::RequestSelectTree(m_tree, isNowSelected);
 }
 
 //--------------------------------------------------------------------------------
 
-void vdm::JuceTreeViewItem::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property)
+void vdm::JuceTreeView::Item::valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
+                                                       const juce::Identifier &property)
 {
     if (treeWhosePropertyHasChanged == m_tree)
     {
@@ -76,9 +94,8 @@ void vdm::JuceTreeViewItem::valueTreePropertyChanged(juce::ValueTree& treeWhoseP
 
 //--------------------------------------------------------------------------------
 
-void vdm::JuceTreeViewItem::valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenAdded)
+void vdm::JuceTreeView::Item::valueTreeChildAdded(juce::ValueTree &parentTree, juce::ValueTree &childWhichHasBeenAdded)
 {
-    auto path = childWhichHasBeenAdded.getProperty(PathUpdateHandler::Key).toString().toStdString();
     if (parentTree == m_tree)
     {
         auto ptr = createItem(childWhichHasBeenAdded);
@@ -88,7 +105,9 @@ void vdm::JuceTreeViewItem::valueTreeChildAdded(juce::ValueTree& parentTree, juc
 
 //--------------------------------------------------------------------------------
 
-void vdm::JuceTreeViewItem::valueTreeChildRemoved(juce::ValueTree& parentTree, juce::ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved)
+void vdm::JuceTreeView::Item::valueTreeChildRemoved(juce::ValueTree &parentTree,
+                                                    juce::ValueTree &childWhichHasBeenRemoved,
+                                                    int indexFromWhichChildWasRemoved)
 {
     juce::ignoreUnused(childWhichHasBeenRemoved);
 
@@ -100,7 +119,7 @@ void vdm::JuceTreeViewItem::valueTreeChildRemoved(juce::ValueTree& parentTree, j
 
 //--------------------------------------------------------------------------------
 
-void vdm::JuceTreeViewItem::valueTreeChildOrderChanged(juce::ValueTree& parentTree, int oldIndex, int newIndex)
+void vdm::JuceTreeView::Item::valueTreeChildOrderChanged(juce::ValueTree &parentTree, int oldIndex, int newIndex)
 {
     if (parentTree == m_tree)
     {

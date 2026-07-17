@@ -4,7 +4,7 @@
     ID:                 vdm_ui
     vendor:             VainAudio
     version:            1.0.0
-    name:               Vain Directory Module
+    name:               Vain Directory Model Components
     description:        UI components for displaying vdm Directory Models as a directory tree
     website:            VainAudio.com
     license:            MIT
@@ -17,7 +17,6 @@
 #pragma once
 
 #include "TreeView/vdm_JuceTreeView.h"
-#include "TreeView/vdm_JuceTreeViewItem.h"
 #include "TreeView/vdm_TreeView.h"
 #include "TreeView/vdm_TreeViewItemListener.h"
 
