@@ -41,13 +41,13 @@ public:
 
 private:
     void handleFileAction(efsw::WatchID watchid, const std::string &dir, const std::string &filename,
-                          efsw::Action action, const std::string& oldFilename) override;
+                          efsw::Action action, const std::string &oldFilename) override;
     void messageThreadHandleFileAction(efsw::WatchID watchid, const std::string &dir, const std::string &filename,
                                        efsw::Action action, std::string oldFilename);
 
     struct Entry
     {
-        DirectoryModel *model;
+        juce::WeakReference<DirectoryModel> model;
         const juce::FileFilter *fileFilter;
     };
     using ModelMap = std::map<efsw::WatchID, Entry>;
