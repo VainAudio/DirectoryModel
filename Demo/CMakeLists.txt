@@ -14,7 +14,6 @@ target_sources(
         Main.cpp
         MainComponent.cpp
         DirectoryModelDemo/DirectoryModelDemoComponent.cpp
-        DirectoryModelDemo/TreeView/DirectoryModelDemoTreeView.cpp
         DirectoryModelDemo/SelectionViewer.cpp
 )
 

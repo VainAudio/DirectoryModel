@@ -1,5 +1,28 @@
 #include "DirectoryModelDemoComponent.h"
-#include "TreeView/DirectoryModelDemoTreeView.h"
+#include <vdm_ui/vdm_ui.h>
+
+//--------------------------------------------------------------------------------
+
+namespace
+{
+    class DirectoryModelDemoTreeView : public vdm::TreeView
+    {
+    public:
+        DirectoryModelDemoTreeView()
+        {
+            addKeyListener(&dirSelection);
+            setWantsKeyboardFocus(true);
+        }
+        ~DirectoryModelDemoTreeView() override
+        {
+            removeKeyListener(&dirSelection);
+        }
+
+        vdm::TreeViewSelectorKeyListener dirSelection;
+    };
+}
+
+//--------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------
 
@@ -35,7 +58,7 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
         if (const auto p = dynamic_cast<DirectoryModelDemoTreeView *>(m_treeView.get()))
         {
             p->setRootItemVisible(b);
-            p->setRootItemSelectable(b);
+            p->dirSelection.setRootItemSelectable(b);
         }
     };
 
@@ -54,7 +77,7 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
     addAndMakeVisible(m_selectionViewer);
 
     m_treeViewTypeCbx.addItem("juce treeview", 1);
-    m_treeViewTypeCbx.addItem("custom tree view", 2);
+    m_treeViewTypeCbx.addItem("vdm treeview", 2);
     m_treeViewTypeCbx.onChange = [this]()
     {
         switch (m_treeViewTypeCbx.getSelectedId())
@@ -68,9 +91,9 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
         }
         case 2:
         {
-            auto ptr = std::make_unique<vdm::TreeView>();
+            auto ptr = std::make_unique<DirectoryModelDemoTreeView>();
             ptr->setValueTree(m_dirModel.getValueTree());
-            // ptr->setSelectionValueTree(m_dirModel.getValueTree());
+            ptr->dirSelection.setValueTree(m_dirModel.getValueTree());
             m_treeView = std::move(ptr);
             break;
         }
