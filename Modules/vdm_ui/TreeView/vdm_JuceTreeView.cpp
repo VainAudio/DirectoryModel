@@ -1,4 +1,8 @@
 #include "vdm_JuceTreeView.h"
+
+#include "vdm_JuceTreeViewItem.h"
+#include "vdm_JuceTreeViewItemComponent.h"
+
 #include <vdm_directory/vdm_directory.h>
 
 //--------------------------------------------------------------------------------
@@ -127,6 +131,25 @@ void vdm::JuceTreeView::Item::valueTreeChildOrderChanged(juce::ValueTree &parent
         removeSubItem(oldIndex, false);
         addSubItem(item, newIndex);
     }
+}
+
+//--------------------------------------------------------------------------------
+
+std::unique_ptr<juce::TreeViewItem> vdm::JuceTreeView::Item::createItem(juce::ValueTree)
+{
+}
+
+//--------------------------------------------------------------------------------
+
+std::unique_ptr<juce::Component> vdm::JuceTreeView::Item::createItemComponent(juce::ValueTree)
+{
+}
+
+//--------------------------------------------------------------------------------
+
+std::unique_ptr<vdm::JuceTreeView::Item> vdm::JuceTreeView::createTreeViewItem(juce::ValueTree tree)
+{
+    return std::make_unique<vdm::JuceTreeViewItem>(tree);
 }
 
 //--------------------------------------------------------------------------------

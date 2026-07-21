@@ -8,15 +8,23 @@
 
 //--------------------------------------------------------------------------------
 
-class DirectoryModelDemoJuceTreeViewItem : public vdm::JuceTreeView::Item
+BEGIN_VDM_NAMESPACE
+
+//--------------------------------------------------------------------------------
+
+class JuceTreeViewItem : public vdm::JuceTreeView::Item
 {
 public:
-    explicit DirectoryModelDemoJuceTreeViewItem(juce::ValueTree tree);
-    ~DirectoryModelDemoJuceTreeViewItem() override;
+    explicit JuceTreeViewItem(juce::ValueTree tree);
+    ~JuceTreeViewItem() override;
 
 private:
     std::unique_ptr<juce::TreeViewItem> createItem(juce::ValueTree) override;
     std::unique_ptr<juce::Component> createItemComponent(juce::ValueTree) override;
 };
+
+//--------------------------------------------------------------------------------
+
+END_VDM_NAMESPACE
 
 //--------------------------------------------------------------------------------

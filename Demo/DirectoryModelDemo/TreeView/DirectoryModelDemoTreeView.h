@@ -18,7 +18,6 @@ public:
     void setSelectionValueTree(juce::ValueTree tree);
 
 private:
-    // std::unique_ptr<juce::Component> createTreeViewItemtem(juce::ValueTree tree) override;
     vdm::TreeViewSelectorKeyListener m_dirSelection;
 };
 

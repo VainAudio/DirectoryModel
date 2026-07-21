@@ -20,5 +20,7 @@
 #include "TreeView/vdm_TreeView.h"
 #include "TreeView/vdm_TreeViewItemBase.h"
 #include "TreeView/vdm_TreeViewItemDefault.h"
+#include "TreeView/vdm_JuceTreeViewItem.h"
+#include "TreeView/vdm_JuceTreeViewItemComponent.h"
 
 #include "TreeView/vdm_TreeViewSelectorKeyListener.h"

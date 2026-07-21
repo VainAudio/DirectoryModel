@@ -1,6 +1,4 @@
 #include "DirectoryModelDemoComponent.h"
-
-#include "JuceTreeView/DirectoryModelDemoJuceTreeView.h"
 #include "TreeView/DirectoryModelDemoTreeView.h"
 
 //--------------------------------------------------------------------------------
@@ -32,7 +30,7 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
     {
         const bool b{ m_showRootItemToggle.getToggleState() };
 
-        if (const auto p = dynamic_cast<DirectoryModelDemoJuceTreeView *>(m_treeView.get()))
+        if (const auto p = dynamic_cast<vdm::JuceTreeView *>(m_treeView.get()))
             p->setRootItemVisible(b);
         if (const auto p = dynamic_cast<DirectoryModelDemoTreeView *>(m_treeView.get()))
         {
@@ -63,7 +61,7 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
         {
         case 1:
         {
-            auto ptr = std::make_unique<DirectoryModelDemoJuceTreeView>();
+            auto ptr = std::make_unique<vdm::JuceTreeView>();
             ptr->setValueTree(m_dirModel.getValueTree());
             m_treeView = std::move(ptr);
             break;
