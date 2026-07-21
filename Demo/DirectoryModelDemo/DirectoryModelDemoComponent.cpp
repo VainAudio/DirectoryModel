@@ -70,9 +70,9 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
         }
         case 2:
         {
-            auto ptr = std::make_unique<DirectoryModelDemoTreeView>();
+            auto ptr = std::make_unique<vdm::TreeView>();
             ptr->setValueTree(m_dirModel.getValueTree());
-            ptr->setSelectionValueTree(m_dirModel.getValueTree());
+            // ptr->setSelectionValueTree(m_dirModel.getValueTree());
             m_treeView = std::move(ptr);
             break;
         }

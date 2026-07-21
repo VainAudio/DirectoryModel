@@ -44,6 +44,8 @@ public:
     int getMaxIndentLevel() const;
 
 private:
+    virtual std::unique_ptr<juce::Component> createTreeViewItem(juce::ValueTree tree);
+
     void valueTreeChildAdded(juce::ValueTree &parentTree, juce::ValueTree &childWhichHasBeenAdded) override;
     void valueTreeChildRemoved(juce::ValueTree &parentTree, juce::ValueTree &childWhichHasBeenRemoved,
                                int indexFromWhichChildWasRemoved) override;
@@ -67,7 +69,6 @@ private:
     };
 
     Node *getNode(juce::ValueTree tree);
-    virtual std::unique_ptr<juce::Component> createTreeViewItem(juce::ValueTree tree) = 0;
     std::unique_ptr<juce::Component> internalCreateTreeViewItem(juce::ValueTree tree);
 
     Node m_root;

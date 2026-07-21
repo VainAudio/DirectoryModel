@@ -1,5 +1,6 @@
 #include "vdm_TreeView.h"
 #include <vdm_directory/vdm_directory.h>
+#include <vdm_ui/vdm_ui.h>
 
 //--------------------------------------------------------------------------------
 
@@ -263,6 +264,13 @@ vdm::TreeView::Node *vdm::TreeView::getNode(juce::ValueTree tree)
 
     jassertfalse;
     return nullptr;
+}
+
+//--------------------------------------------------------------------------------
+
+std::unique_ptr<juce::Component> vdm::TreeView::createTreeViewItem(juce::ValueTree tree)
+{
+    return std::make_unique<vdm::TreeViewItemDefault>(tree);
 }
 
 //--------------------------------------------------------------------------------

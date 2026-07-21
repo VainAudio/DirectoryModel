@@ -1,5 +1,4 @@
 #include "DirectoryModelDemoTreeView.h"
-#include "DirectoryModelDemoTreeViewItem.h"
 
 //--------------------------------------------------------------------------------
 
@@ -32,9 +31,9 @@ void DirectoryModelDemoTreeView::setSelectionValueTree(juce::ValueTree tree)
 
 //--------------------------------------------------------------------------------
 
-std::unique_ptr<juce::Component> DirectoryModelDemoTreeView::createTreeViewItem(juce::ValueTree tree)
-{
-    return std::make_unique<DirectoryModelDemoTreeViewItem>(tree);
-}
+// std::unique_ptr<juce::Component> DirectoryModelDemoTreeView::createTreeViewItem(juce::ValueTree tree)
+// {
+// return std::make_unique<TreeViewItemDefault>(tree);
+// }
 
 //--------------------------------------------------------------------------------
