@@ -1,7 +1,28 @@
 #include "DirectoryModelDemoComponent.h"
+#include <vdm_ui/vdm_ui.h>
 
-#include "JuceTreeView/DirectoryModelDemoJuceTreeView.h"
-#include "TreeView/DirectoryModelDemoTreeView.h"
+//--------------------------------------------------------------------------------
+
+namespace
+{
+    class DirectoryModelDemoTreeView : public vdm::TreeView
+    {
+    public:
+        DirectoryModelDemoTreeView()
+        {
+            addKeyListener(&dirSelection);
+            setWantsKeyboardFocus(true);
+        }
+        ~DirectoryModelDemoTreeView() override
+        {
+            removeKeyListener(&dirSelection);
+        }
+
+        vdm::TreeViewSelectorKeyListener dirSelection;
+    };
+}
+
+//--------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------
 
@@ -32,12 +53,12 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
     {
         const bool b{ m_showRootItemToggle.getToggleState() };
 
-        if (const auto p = dynamic_cast<DirectoryModelDemoJuceTreeView *>(m_treeView.get()))
+        if (const auto p = dynamic_cast<vdm::JuceTreeView *>(m_treeView.get()))
             p->setRootItemVisible(b);
         if (const auto p = dynamic_cast<DirectoryModelDemoTreeView *>(m_treeView.get()))
         {
             p->setRootItemVisible(b);
-            p->setRootItemSelectable(b);
+            p->dirSelection.setRootItemSelectable(b);
         }
     };
 
@@ -49,21 +70,18 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
                                                                                  : vdm::SingleSelectionHandler::Mode);
     };
 
-    getLookAndFeel().setColour(juce::ToggleButton::ColourIds::textColourId, juce::Colours::black);
-    getLookAndFeel().setColour(juce::ToggleButton::ColourIds::tickColourId, juce::Colours::black);
-
     m_selectionViewer.setSelectionModelValueTree(m_dirModel.getValueTree());
     addAndMakeVisible(m_selectionViewer);
 
     m_treeViewTypeCbx.addItem("juce treeview", 1);
-    m_treeViewTypeCbx.addItem("custom tree view", 2);
+    m_treeViewTypeCbx.addItem("vdm treeview", 2);
     m_treeViewTypeCbx.onChange = [this]()
     {
         switch (m_treeViewTypeCbx.getSelectedId())
         {
         case 1:
         {
-            auto ptr = std::make_unique<DirectoryModelDemoJuceTreeView>();
+            auto ptr = std::make_unique<vdm::JuceTreeView>();
             ptr->setValueTree(m_dirModel.getValueTree());
             m_treeView = std::move(ptr);
             break;
@@ -72,7 +90,7 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
         {
             auto ptr = std::make_unique<DirectoryModelDemoTreeView>();
             ptr->setValueTree(m_dirModel.getValueTree());
-            ptr->setSelectionValueTree(m_dirModel.getValueTree());
+            ptr->dirSelection.setValueTree(m_dirModel.getValueTree());
             m_treeView = std::move(ptr);
             break;
         }

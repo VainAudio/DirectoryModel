@@ -2,6 +2,14 @@
 
 //-----------------------------------------------------------------------------
 
+void vdm::DirectoryModel::setFileType(juce::ValueTree tree, Type type)
+{
+    if (type != Type::None)
+        tree.setProperty(Keys::FileType, static_cast<int>(type), nullptr);
+}
+
+//-----------------------------------------------------------------------------
+
 bool vdm::DirectoryModel::IsDir(juce::ValueTree tree)
 {
     return static_cast<int>(tree.getProperty(Keys::FileType)) == static_cast<int>(Type::Dir);
@@ -111,7 +119,7 @@ void vdm::DirectoryModel::removeFile(juce::File file)
 void vdm::DirectoryModel::handleAddUpdate(juce::ValueTree tree, juce::File file) const
 {
     const Type type{ file.isDirectory() ? Type::Dir : Type::File };
-    tree.setProperty(Keys::FileType, static_cast<int>(type), nullptr);
+    setFileType(tree, type);
 
     for (auto &i : m_updateHandlers)
         i->onAdd(tree, file);

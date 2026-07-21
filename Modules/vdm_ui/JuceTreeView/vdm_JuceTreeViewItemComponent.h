@@ -8,14 +8,18 @@
 
 //--------------------------------------------------------------------------------
 
-class DirectoryModelDemoJuceTreeViewItemComponent
+BEGIN_VDM_NAMESPACE
+
+//--------------------------------------------------------------------------------
+
+class JuceTreeViewItemComponent
     : public juce::Component
     , private juce::ValueTree::Listener
-    , private vdm::TreeViewItemListener
+    , private vdm::TreeViewItemBase
 {
 public:
-    explicit DirectoryModelDemoJuceTreeViewItemComponent(juce::ValueTree tree);
-    ~DirectoryModelDemoJuceTreeViewItemComponent() override;
+    explicit JuceTreeViewItemComponent(juce::ValueTree tree);
+    ~JuceTreeViewItemComponent() override;
 
     void paint(juce::Graphics &g) override;
 
@@ -33,5 +37,9 @@ private:
     juce::String m_sizeString;
     bool m_isSelected{ false };
 };
+
+//--------------------------------------------------------------------------------
+
+END_VDM_NAMESPACE
 
 //--------------------------------------------------------------------------------

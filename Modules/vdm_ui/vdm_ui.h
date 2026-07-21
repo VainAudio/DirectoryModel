@@ -16,8 +16,11 @@
 
 #pragma once
 
-#include "TreeView/vdm_JuceTreeView.h"
 #include "TreeView/vdm_TreeView.h"
-#include "TreeView/vdm_TreeViewItemListener.h"
-
+#include "TreeView/vdm_TreeViewItemBase.h"
+#include "TreeView/vdm_TreeViewItemDefault.h"
 #include "TreeView/vdm_TreeViewSelectorKeyListener.h"
+
+#include "JuceTreeView/vdm_JuceTreeView.h"
+#include "JuceTreeView/vdm_JuceTreeViewItem.h"
+#include "JuceTreeView/vdm_JuceTreeViewItemComponent.h"

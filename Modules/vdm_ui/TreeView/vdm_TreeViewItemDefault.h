@@ -3,21 +3,22 @@
 //--------------------------------------------------------------------------------
 
 #include <juce_gui_basics/juce_gui_basics.h>
-#include <vdm_directory/vdm_directory.h>
 #include <vdm_ui/vdm_ui.h>
-
-#include "../SelectionViewer.h"
 
 //--------------------------------------------------------------------------------
 
-class DirectoryModelDemoTreeViewItem
+BEGIN_VDM_NAMESPACE
+
+//--------------------------------------------------------------------------------
+
+class TreeViewItemDefault final
     : public juce::Component
-    , private vdm::TreeViewItemListener
+    , private vdm::TreeViewItemBase
     , private juce::ValueTree::Listener
 {
 public:
-    explicit DirectoryModelDemoTreeViewItem(juce::ValueTree tree);
-    ~DirectoryModelDemoTreeViewItem() override;
+    explicit TreeViewItemDefault(juce::ValueTree tree);
+    ~TreeViewItemDefault() override;
 
     void paint(juce::Graphics &g) override;
 
@@ -39,5 +40,9 @@ private:
     bool m_isSelected{ false };
     juce::String m_sizeString;
 };
+
+//--------------------------------------------------------------------------------
+
+END_VDM_NAMESPACE
 
 //--------------------------------------------------------------------------------

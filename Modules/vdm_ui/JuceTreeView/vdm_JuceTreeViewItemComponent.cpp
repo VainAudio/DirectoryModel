@@ -1,9 +1,9 @@
-#include "DirectoryModelDemoJuceTreeViewItemComponent.h"
+#include "vdm_JuceTreeViewItemComponent.h"
 
 //--------------------------------------------------------------------------------
 
-DirectoryModelDemoJuceTreeViewItemComponent::DirectoryModelDemoJuceTreeViewItemComponent(juce::ValueTree tree)
-    : vdm::TreeViewItemListener(tree)
+vdm::JuceTreeViewItemComponent::JuceTreeViewItemComponent(juce::ValueTree tree)
+    : vdm::TreeViewItemBase(tree)
     , m_tree(tree)
 {
     initTreeViewItemListener();
@@ -11,20 +11,20 @@ DirectoryModelDemoJuceTreeViewItemComponent::DirectoryModelDemoJuceTreeViewItemC
     for (int i = 0; i < m_tree.getNumProperties(); i++)
     {
         const auto propId{ m_tree.getPropertyName(i) };
-        DirectoryModelDemoJuceTreeViewItemComponent::valueTreePropertyChanged(m_tree, propId);
+        vdm::JuceTreeViewItemComponent::valueTreePropertyChanged(m_tree, propId);
     }
 }
 
 //--------------------------------------------------------------------------------
 
-DirectoryModelDemoJuceTreeViewItemComponent::~DirectoryModelDemoJuceTreeViewItemComponent()
+vdm::JuceTreeViewItemComponent::~JuceTreeViewItemComponent()
 {
     m_tree.removeListener(this);
 }
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoJuceTreeViewItemComponent::paint(juce::Graphics &g)
+void vdm::JuceTreeViewItemComponent::paint(juce::Graphics &g)
 {
     const auto b{ getLocalBounds() };
 
@@ -38,7 +38,7 @@ void DirectoryModelDemoJuceTreeViewItemComponent::paint(juce::Graphics &g)
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoJuceTreeViewItemComponent::mouseUp(const juce::MouseEvent &event)
+void vdm::JuceTreeViewItemComponent::mouseUp(const juce::MouseEvent &event)
 {
     if (!event.mods.isLeftButtonDown())
         return;
@@ -49,7 +49,7 @@ void DirectoryModelDemoJuceTreeViewItemComponent::mouseUp(const juce::MouseEvent
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoJuceTreeViewItemComponent::mouseDoubleClick(const juce::MouseEvent &event)
+void vdm::JuceTreeViewItemComponent::mouseDoubleClick(const juce::MouseEvent &event)
 {
     using vdm = vdm::DirectoryModel;
     if (event.mods.isLeftButtonDown() && vdm::IsDir(m_tree))
@@ -58,7 +58,7 @@ void DirectoryModelDemoJuceTreeViewItemComponent::mouseDoubleClick(const juce::M
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoJuceTreeViewItemComponent::onItemSelectedChanged(bool isSelected)
+void vdm::JuceTreeViewItemComponent::onItemSelectedChanged(bool isSelected)
 {
     m_isSelected = isSelected;
     repaint();
@@ -66,7 +66,7 @@ void DirectoryModelDemoJuceTreeViewItemComponent::onItemSelectedChanged(bool isS
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoJuceTreeViewItemComponent::onItemIsDirOpenChanged(bool isDirOpen)
+void vdm::JuceTreeViewItemComponent::onItemIsDirOpenChanged(bool isDirOpen)
 {
     juce::ignoreUnused(isDirOpen);
     repaint();
@@ -74,8 +74,8 @@ void DirectoryModelDemoJuceTreeViewItemComponent::onItemIsDirOpenChanged(bool is
 
 //--------------------------------------------------------------------------------
 
-void DirectoryModelDemoJuceTreeViewItemComponent::valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
-                                                                           const juce::Identifier &property)
+void vdm::JuceTreeViewItemComponent::valueTreePropertyChanged(juce::ValueTree &treeWhosePropertyHasChanged,
+                                                              const juce::Identifier &property)
 {
     if (treeWhosePropertyHasChanged != m_tree)
         return;
