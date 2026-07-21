@@ -60,6 +60,8 @@ public:
         static const inline juce::Identifier DirOpen{ "vdm_dir_open" };
     };
 
+    static void setFileType(juce::ValueTree tree, Type type);
+
     static bool IsDir(juce::ValueTree tree);
     static bool IsFile(juce::ValueTree tree);
     static bool IsDirOpen(juce::ValueTree tree);
