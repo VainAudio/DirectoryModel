@@ -11,7 +11,7 @@
 class DirectoryModelDemoJuceTreeViewItemComponent
     : public juce::Component
     , private juce::ValueTree::Listener
-    , private vdm::TreeViewItemListener
+    , private vdm::TreeViewItemBase
 {
 public:
     explicit DirectoryModelDemoJuceTreeViewItemComponent(juce::ValueTree tree);

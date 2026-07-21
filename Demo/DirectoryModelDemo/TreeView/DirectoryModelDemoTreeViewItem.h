@@ -12,7 +12,7 @@
 
 class DirectoryModelDemoTreeViewItem
     : public juce::Component
-    , private vdm::TreeViewItemListener
+    , private vdm::TreeViewItemBase
     , private juce::ValueTree::Listener
 {
 public:

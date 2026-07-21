@@ -3,7 +3,7 @@
 //--------------------------------------------------------------------------------
 
 DirectoryModelDemoJuceTreeViewItemComponent::DirectoryModelDemoJuceTreeViewItemComponent(juce::ValueTree tree)
-    : vdm::TreeViewItemListener(tree)
+    : vdm::TreeViewItemBase(tree)
     , m_tree(tree)
 {
     initTreeViewItemListener();

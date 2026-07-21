@@ -12,7 +12,7 @@ BEGIN_VDM_NAMESPACE
 
 //--------------------------------------------------------------------------------
 /**
- * @class TreeViewItemListener
+ * @class TreeViewItemBase
  * @brief Get callbacks related to tree view item properties
  *
  * @note This reacts to DirectoryModel keys for openness and SelectionModel keys
@@ -20,11 +20,11 @@ BEGIN_VDM_NAMESPACE
 
  * @note requires SelectionModel for onItemSelectedChanged callbacks
  */
-class TreeViewItemListener
+class TreeViewItemBase
 {
 public:
-    explicit TreeViewItemListener(juce::ValueTree tree);
-    virtual ~TreeViewItemListener();
+    explicit TreeViewItemBase(juce::ValueTree tree);
+    virtual ~TreeViewItemBase();
 
     virtual void onItemSelectedChanged(bool isSelected) = 0;
     virtual void onItemIsDirOpenChanged(bool isDirOpen) = 0;

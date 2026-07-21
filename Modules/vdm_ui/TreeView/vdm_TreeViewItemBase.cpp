@@ -1,12 +1,12 @@
-#include "vdm_TreeViewItemListener.h"
+#include "vdm_TreeViewItemBase.h"
 #include <vdm_directory/vdm_directory.h>
 
 //--------------------------------------------------------------------------------
 
-class vdm::TreeViewItemListener::Impl : public juce::ValueTree::Listener
+class vdm::TreeViewItemBase::Impl : public juce::ValueTree::Listener
 {
 public:
-    Impl(TreeViewItemListener &i, juce::ValueTree t)
+    Impl(TreeViewItemBase &i, juce::ValueTree t)
         : item(i)
         , tree(t)
     {
@@ -30,24 +30,24 @@ public:
         }
     }
 
-    TreeViewItemListener &item;
+    TreeViewItemBase &item;
     juce::ValueTree tree;
 };
 
 //--------------------------------------------------------------------------------
 
-vdm::TreeViewItemListener::TreeViewItemListener(juce::ValueTree tree)
+vdm::TreeViewItemBase::TreeViewItemBase(juce::ValueTree tree)
     : m_p(std::make_unique<Impl>(*this, tree))
 {
 }
 
 //--------------------------------------------------------------------------------
 
-vdm::TreeViewItemListener::~TreeViewItemListener() = default;
+vdm::TreeViewItemBase::~TreeViewItemBase() = default;
 
 //--------------------------------------------------------------------------------
 
-void vdm::TreeViewItemListener::initTreeViewItemListener()
+void vdm::TreeViewItemBase::initTreeViewItemListener()
 {
     for (int i = 0; i < m_p->tree.getNumProperties(); i++)
     {
