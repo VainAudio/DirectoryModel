@@ -70,9 +70,6 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
                                                                                  : vdm::SingleSelectionHandler::Mode);
     };
 
-    getLookAndFeel().setColour(juce::ToggleButton::ColourIds::textColourId, juce::Colours::black);
-    getLookAndFeel().setColour(juce::ToggleButton::ColourIds::tickColourId, juce::Colours::black);
-
     m_selectionViewer.setSelectionModelValueTree(m_dirModel.getValueTree());
     addAndMakeVisible(m_selectionViewer);
 
