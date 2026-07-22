@@ -2,6 +2,7 @@
 #include "DirectoryModel/vdm_DirectoryModelSync.cpp"
 #include "DirectoryModel/vdm_DirectoryTree.cpp"
 #include "DirectoryModel/vdm_DirectoryModelUpdateHandlers.cpp"
+#include "DirectoryModel/vdm_DirectoryModelBuilder.cpp"
 
 #include "SelectionModel/vdm_SelectionModel.cpp"
 #include "SelectionModel/vdm_SelectionModelListener.cpp"

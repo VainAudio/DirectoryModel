@@ -19,11 +19,13 @@ public:
     void modifierKeysChanged(const juce::ModifierKeys &modifiers) override;
 
 private:
-    vdm::FileNameUpdateHandler m_nameUpdateHandler;
-    vdm::FileSizeUpdateHandler m_fileSizeUpdateHandler;
-    vdm::FileExtensionUpdateHandler m_extensionUpdateHandler;
-    vdm::FilePathUpdateHandler m_pathUpdateHandler;
-    vdm::DirectoryModel m_dirModel;
+    const std::unique_ptr<vdm::DirectoryModel> m_dirModel{ vdm::DirectoryModelBuilder{}
+                                                               .withFileNameUpdater()
+                                                               .withFileSizeUpdater()
+                                                               .withFileExtensionUpdater()
+                                                               .withFilePathUpdater()
+                                                               .build() };
+
     vdm::DirectoryModelSync m_dirModelSync;
     vdm::SelectionModel m_selectionModel;
 
