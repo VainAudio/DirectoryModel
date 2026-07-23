@@ -65,6 +65,9 @@ void vdm::SelectionModel::setValueTree(juce::ValueTree tree)
 void vdm::SelectionModel::addSelectionHandler(const juce::String &modeId, ISelectionHandler &handler)
 {
     m_selectionHandlers[modeId] = &handler;
+
+    if (m_selectionHandlers.size() == 1)
+        setSelectionMode(modeId);
 }
 
 //-----------------------------------------------------------------------------
@@ -88,7 +91,7 @@ void vdm::SelectionModel::valueTreePropertyChanged(juce::ValueTree &treeWhosePro
             treeWhosePropertyHasChanged.removeProperty(RequestSelectionKey, nullptr);
         }
         else
-            jassertfalse;
+            jassertfalse; // must add selection handlders to use selection logic
     }
     if (property == IsSelectedKey)
     {
