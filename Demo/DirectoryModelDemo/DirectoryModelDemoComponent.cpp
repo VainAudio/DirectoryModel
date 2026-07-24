@@ -28,17 +28,12 @@ namespace
 
 DirectoryModelDemoComponent::DirectoryModelDemoComponent()
 {
-    m_dirModel.addUpdateHandler(m_nameUpdateHandler);
-    m_dirModel.addUpdateHandler(m_fileSizeUpdateHandler);
-    m_dirModel.addUpdateHandler(m_extensionUpdateHandler);
-    m_dirModel.addUpdateHandler(m_pathUpdateHandler);
+    m_dirModel->initialize(juce::File{ PROJECT_ROOT_DIR });
+    vdm::DirectoryModel::SetDirOpen(m_dirModel->getValueTree(), true);
 
-    m_dirModel.initialize(juce::File{ PROJECT_ROOT_DIR });
-    vdm::DirectoryModel::SetDirOpen(m_dirModel.getValueTree(), true);
+    m_dirModelSync.syncModel(*m_dirModel);
 
-    m_dirModelSync.syncModel(m_dirModel);
-
-    m_selectionModel.setValueTree(m_dirModel.getValueTree());
+    m_selectionModel.setValueTree(m_dirModel->getValueTree());
 
     m_selectionModel.addSelectionHandler(m_singleSelectionHandler.Mode, m_singleSelectionHandler);
     m_selectionModel.addSelectionHandler(m_individualMultiSelectionHandler.Mode, m_individualMultiSelectionHandler);
@@ -70,7 +65,7 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
                                                                                  : vdm::SingleSelectionHandler::Mode);
     };
 
-    m_selectionViewer.setSelectionModelValueTree(m_dirModel.getValueTree());
+    m_selectionViewer.setSelectionModelValueTree(m_dirModel->getValueTree());
     addAndMakeVisible(m_selectionViewer);
 
     m_treeViewTypeCbx.addItem("juce treeview", 1);
@@ -82,15 +77,15 @@ DirectoryModelDemoComponent::DirectoryModelDemoComponent()
         case 1:
         {
             auto ptr = std::make_unique<vdm::JuceTreeView>();
-            ptr->setValueTree(m_dirModel.getValueTree());
+            ptr->setValueTree(m_dirModel->getValueTree());
             m_treeView = std::move(ptr);
             break;
         }
         case 2:
         {
             auto ptr = std::make_unique<DirectoryModelDemoTreeView>();
-            ptr->setValueTree(m_dirModel.getValueTree());
-            ptr->dirSelection.setValueTree(m_dirModel.getValueTree());
+            ptr->setValueTree(m_dirModel->getValueTree());
+            ptr->dirSelection.setValueTree(m_dirModel->getValueTree());
             m_treeView = std::move(ptr);
             break;
         }

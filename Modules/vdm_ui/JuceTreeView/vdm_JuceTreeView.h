@@ -60,8 +60,8 @@ public:
         void valueTreeChildOrderChanged(juce::ValueTree &parentTreeWhoseChildrenHaveMoved, int oldIndex,
                                         int newIndex) override;
 
-        virtual std::unique_ptr<juce::TreeViewItem> createItem(juce::ValueTree);
-        virtual std::unique_ptr<juce::Component> createItemComponent(juce::ValueTree);
+        virtual std::unique_ptr<juce::TreeViewItem> createItem(juce::ValueTree tree);
+        virtual std::unique_ptr<juce::Component> createItemComponent(juce::ValueTree tree);
 
         juce::ValueTree m_tree;
     };

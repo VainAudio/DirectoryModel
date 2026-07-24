@@ -20,6 +20,7 @@
 #include "DirectoryModel/vdm_DirectoryModelSync.h"
 #include "DirectoryModel/vdm_DirectoryTree.h"
 #include "DirectoryModel/vdm_DirectoryModelUpdateHandlers.h"
+#include "DirectoryModel/vdm_DirectoryModelBuilder.h"
 
 #include "SelectionModel/vdm_SelectionModel.h"
 #include "SelectionModel/vdm_SelectionModelListener.h"

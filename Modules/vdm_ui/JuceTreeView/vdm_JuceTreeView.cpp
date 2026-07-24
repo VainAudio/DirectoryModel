@@ -22,8 +22,6 @@ void vdm::JuceTreeView::setValueTree(juce::ValueTree tree)
 
 //--------------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------------
-
 vdm::JuceTreeView::Item::Item() = default;
 
 //--------------------------------------------------------------------------------
@@ -135,14 +133,16 @@ void vdm::JuceTreeView::Item::valueTreeChildOrderChanged(juce::ValueTree &parent
 
 //--------------------------------------------------------------------------------
 
-std::unique_ptr<juce::TreeViewItem> vdm::JuceTreeView::Item::createItem(juce::ValueTree)
+std::unique_ptr<juce::TreeViewItem> vdm::JuceTreeView::Item::createItem(juce::ValueTree tree)
 {
+    return std::make_unique<JuceTreeViewItem>(tree);
 }
 
 //--------------------------------------------------------------------------------
 
-std::unique_ptr<juce::Component> vdm::JuceTreeView::Item::createItemComponent(juce::ValueTree)
+std::unique_ptr<juce::Component> vdm::JuceTreeView::Item::createItemComponent(juce::ValueTree tree)
 {
+    return std::make_unique<JuceTreeViewItemComponent>(tree);
 }
 
 //--------------------------------------------------------------------------------
