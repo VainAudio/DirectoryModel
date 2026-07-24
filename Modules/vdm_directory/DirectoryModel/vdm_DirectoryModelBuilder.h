@@ -25,7 +25,7 @@ public:
     DirectoryModelBuilder &withFileSizeUpdater();
     DirectoryModelBuilder &withFileExtensionUpdater();
     DirectoryModelBuilder &withFilePathUpdater();
-
+    
     std::unique_ptr<DirectoryModel> build();
 
 protected:
